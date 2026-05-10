@@ -392,35 +392,35 @@ def classify_device(vendor, hostname, ports, os_guess):
     if any(x in v for x in ["espressif","tuya","shelly","philips hue","ring"]):
         return "🔌 IoT Device"
     if any(x in v for x in ["raspberry pi","arduino"]):
-        return "🤖 SBC / IoT"
+        return "[SBC / IoT]"
     if any(x in v for x in ["cisco","netgear","tp-link","d-link","asus","linksys",
                               "ubiquiti","mikrotik","aruba","juniper","fortinet",
                               "avm","fritz","arris","sagemcom","zte","huawei"]):
-        return "🌐 Network Gear"
+        return "[Network Gear]"
     if any(x in v for x in ["vmware","virtualbox","qemu","hyper-v","xen"]):
-        return "🖥️  Virtual Machine"
+        return "[Virtual Machine]"
     if "apple" in v:
         if any(x in h for x in ["iphone","ipad"]): return "📱 iPhone / iPad"
         if any(x in h for x in ["macbook","imac","mac"]): return "💻 Mac"
-        return "🍏 Apple Device"
+        return "[Apple Device]"
     if any(x in v for x in ["samsung","xiaomi","lg","sony","motorola"]):
-        return "📱 Mobile / Consumer"
+        return "[Mobile / Consumer]"
     if "nintendo" in v: return "🎮 Nintendo"
     if any(x in v for x in ["amazon","google","roku","sonos"]):
-        return "📺 Media / Smart Home"
+        return "[Media / Smart Home]"
     if any(x in v for x in ["canon","epson","hp","brother","lexmark"]):
-        return "🖨️  Printer"
+        return "[Printer]"
     if any(x in v for x in ["synology","qnap","western digital"]):
-        return "💾 NAS Storage"
+        return "[NAS Storage]"
     if any(x in v for x in ["dell","hp","lenovo","super micro"]) and 22 in p:
-        return "🖥️  Server"
+        return "[Server]"
     if 3389 in p or (os_guess and "windows" in os_guess.lower()):
-        return "🖥️  Windows PC"
+        return "[Windows PC]"
     if 22 in p and 80 not in p and 443 not in p:
-        return "🐧 Linux / SSH Host"
+        return "[Linux / SSH Host]"
     if 80 in p or 443 in p:
         return "🌐 Web Server"
-    return "❓ Unknown"
+    return "[Unknown]"
 
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
