@@ -67,8 +67,8 @@ COMMON_PORTS = {
 HIGH_RISK_PORTS = {23, 135, 139, 445, 3389, 5900, 2375, 11211, 27017, 9200}
 
 SCRIPT_DIR  = os.path.dirname(os.path.realpath(__file__))
-DEFAULT_OUI = os.path.join(SCRIPT_DIR, "OUI_DB.json")
-DEFAULT_CVE = os.path.join(SCRIPT_DIR, "CVE_DB.json")
+DEFAULT_OUI = os.path.join(SCRIPT_DIR, "oui_db.json")
+DEFAULT_CVE = os.path.join(SCRIPT_DIR, "cve_db.json")
 DEFAULT_WL  = os.path.join(SCRIPT_DIR, "pathfinder_whitelist.json")
 DEFAULT_OUT = os.path.join(SCRIPT_DIR, "pathfinder_results.json")
 
