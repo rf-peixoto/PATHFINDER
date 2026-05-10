@@ -621,11 +621,11 @@ def print_node(d, idx, gateway_ip, local_ip, whitelist=None, watch_tags=None):
     else:        ip_col = TE+BOLD
 
     if watch_tags:
-        if ip in watch_tags.get("new",set()):         tags.append(f"{LG}[▶ NEW]{R}")
-        if ip in watch_tags.get("mac_changed",{}):    tags.append(f"{DA}{BLNK}[⚠ MAC!]{R}")
+        if ip in watch_tags.get("new",set()):         tags.append(f"{LG}[NEW]{R}")
+        if ip in watch_tags.get("mac_changed",{}):    tags.append(f"{DA}{BLNK}[MAC!]{R}")
     if whitelist and not is_me and not is_gw:
         ws = wl_status(d, whitelist)
-        if ws == "UNCHARTED": tags.append(f"{WA}[⚠ UNCHARTED]{R}")
+        if ws == "UNCHARTED": tags.append(f"{WA}[UNCHARTED]{R}")
 
     print(f"\n  {AM}╭─ {GR}{idx:02d}{R}  {ip_col}{ip:<16}{R}  {'  '.join(tags)}")
     print(f"  {AM}│{R}  {GR}MAC     {R} {WH}{mac}{R}  {GR}·{R}  {GR}Vendor {R} {WA}{d['vendor']}{R}")
