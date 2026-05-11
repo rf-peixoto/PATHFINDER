@@ -1,90 +1,2036 @@
 [
-    {"match": "vsftpd 2.3.4",        "cve": "CVE-2011-2523",  "sev": "CRITICAL", "desc": "vsftpd 2.3.4 backdoor — shell spawns on :6200"},
-    {"match": "proftpd 1.3.3",       "cve": "CVE-2010-4221",  "sev": "CRITICAL", "desc": "ProFTPD 1.3.3 remote code execution via telnet IAC"},
-    {"match": "proftpd 1.3.5",       "cve": "CVE-2015-3306",  "sev": "CRITICAL", "desc": "ProFTPD 1.3.5 mod_copy unauthenticated file copy/read"},
-    {"match": "wu-ftpd",             "cve": "CVE-2000-0573",  "sev": "HIGH",     "desc": "wu-ftpd remote format string vulnerability — EOL software"},
-    {"match": "anonymous",           "cve": "INFO",           "sev": "MEDIUM",   "desc": "FTP anonymous login enabled — check for sensitive data exposure"},
-    {"match": "openssh_3.",          "cve": "CVE-2002-0083",  "sev": "CRITICAL", "desc": "OpenSSH <3.1 integer overflow — remote root exploit"},
-    {"match": "openssh_4.",          "cve": "CVE-2006-5051",  "sev": "HIGH",     "desc": "OpenSSH 4.x signal handler race condition"},
-    {"match": "openssh_5.",          "cve": "CVE-2010-4755",  "sev": "MEDIUM",   "desc": "OpenSSH 5.x wildcard expansion DoS"},
-    {"match": "openssh_6.",          "cve": "CVE-2016-0777",  "sev": "MEDIUM",   "desc": "OpenSSH 6.x info leak via client roaming feature"},
-    {"match": "openssh_7.2",         "cve": "CVE-2016-6515",  "sev": "HIGH",     "desc": "OpenSSH 7.2 auth DoS — unlimited password length accepted"},
-    {"match": "openssh_7.",          "cve": "CVE-2018-15473", "sev": "MEDIUM",   "desc": "OpenSSH 7.x username enumeration via timing oracle"},
-    {"match": "openssh_8.0",         "cve": "CVE-2020-14145", "sev": "LOW",      "desc": "OpenSSH 8.0 observable discrepancy in host key negotiation"},
-    {"match": "openssh_8.5",         "cve": "CVE-2021-41617", "sev": "HIGH",     "desc": "OpenSSH 8.5 privilege escalation in sshd AuthorizedKeysCommand"},
-    {"match": "openssh_9.1",         "cve": "CVE-2023-25136", "sev": "MEDIUM",   "desc": "OpenSSH 9.1 double-free in pre-auth sshd (memory corruption)"},
-    {"match": "dropbear_0.",         "cve": "CVE-2012-0920",  "sev": "HIGH",     "desc": "Dropbear SSH old version — use-after-free post-auth"},
-    {"match": "dropbear_2019.",      "cve": "CVE-2019-12953", "sev": "MEDIUM",   "desc": "Dropbear 2019 information disclosure vulnerability"},
-    {"match": "dropbear_2020.",      "cve": "CVE-2020-36254", "sev": "MEDIUM",   "desc": "Dropbear 2020 channel handling issue"},
-    {"match": "login:",              "cve": "INSECURE",       "sev": "CRITICAL", "desc": "Telnet active — credentials and data sent in CLEARTEXT"},
-    {"match": "telnet",              "cve": "INSECURE",       "sev": "CRITICAL", "desc": "Telnet protocol detected — replace with SSH immediately"},
-    {"match": "apache/2.4.49",       "cve": "CVE-2021-41773", "sev": "CRITICAL", "desc": "Apache 2.4.49 path traversal & unauthenticated RCE"},
-    {"match": "apache/2.4.50",       "cve": "CVE-2021-42013", "sev": "CRITICAL", "desc": "Apache 2.4.50 path traversal bypass (patch bypass of 41773)"},
-    {"match": "apache/2.4.51",       "cve": "CVE-2021-42013", "sev": "CRITICAL", "desc": "Apache 2.4.51 — verify patched against CVE-2021-42013"},
-    {"match": "apache/2.2.",         "cve": "CVE-2017-7679",  "sev": "CRITICAL", "desc": "Apache 2.2.x mod_mime buffer overflow — EOL branch"},
-    {"match": "apache/2.0.",         "cve": "CVE-2007-6750",  "sev": "CRITICAL", "desc": "Apache 2.0.x mod_status redirect + EOL — replace immediately"},
-    {"match": "apache/1.",           "cve": "CVE-2002-0392",  "sev": "CRITICAL", "desc": "Apache 1.x chunked encoding overflow — EOL, replace immediately"},
-    {"match": "nginx/1.13.",         "cve": "CVE-2017-7529",  "sev": "MEDIUM",   "desc": "nginx 1.13 integer overflow in range filter — info leak"},
-    {"match": "nginx/1.14.",         "cve": "CVE-2019-9511",  "sev": "HIGH",     "desc": "nginx 1.14 HTTP/2 Data Dribble DoS"},
-    {"match": "nginx/1.15.",         "cve": "CVE-2019-9511",  "sev": "HIGH",     "desc": "nginx 1.15 HTTP/2 Data Dribble DoS"},
-    {"match": "nginx/1.16.",         "cve": "CVE-2019-20372", "sev": "MEDIUM",   "desc": "nginx 1.16 HTTP request smuggling via invalid Transfer-Encoding"},
-    {"match": "microsoft-iis/6.0",   "cve": "CVE-2017-7269",  "sev": "CRITICAL", "desc": "IIS 6.0 WebDAV ScStoragePathFromUrl buffer overflow — unauthenticated RCE"},
-    {"match": "microsoft-iis/5.",    "cve": "CVE-2001-0507",  "sev": "CRITICAL", "desc": "IIS 5.x .printer ISAPI extension overflow — EOL, replace now"},
-    {"match": "microsoft-iis/7.5",   "cve": "CVE-2010-3972",  "sev": "HIGH",     "desc": "IIS 7.5 FTP service heap overflow — remote code execution"},
-    {"match": "lighttpd/1.4.",       "cve": "CVE-2022-41556", "sev": "HIGH",     "desc": "lighttpd 1.4.x resource leak — potential memory exhaustion DoS"},
-    {"match": "php/5.",              "cve": "EOL",            "sev": "HIGH",     "desc": "PHP 5.x — end of life Dec 2018, no security patches available"},
-    {"match": "php/7.0",             "cve": "EOL",            "sev": "HIGH",     "desc": "PHP 7.0 — end of life Dec 2018"},
-    {"match": "php/7.1",             "cve": "EOL",            "sev": "MEDIUM",   "desc": "PHP 7.1 — end of life Dec 2019"},
-    {"match": "php/7.2",             "cve": "EOL",            "sev": "MEDIUM",   "desc": "PHP 7.2 — end of life Nov 2020"},
-    {"match": "php/7.3",             "cve": "EOL",            "sev": "LOW",      "desc": "PHP 7.3 — end of life Dec 2021"},
-    {"match": "php/7.4",             "cve": "EOL",            "sev": "LOW",      "desc": "PHP 7.4 — end of life Nov 2022"},
-    {"match": "exim 4.87",           "cve": "CVE-2019-10149", "sev": "CRITICAL", "desc": "Exim 4.87 RCPT TO command injection — remote root execution"},
-    {"match": "exim 4.88",           "cve": "CVE-2019-10149", "sev": "CRITICAL", "desc": "Exim 4.88 RCPT TO command injection — remote root execution"},
-    {"match": "exim 4.89",           "cve": "CVE-2019-10149", "sev": "CRITICAL", "desc": "Exim 4.89 RCPT TO command injection — remote root execution"},
-    {"match": "exim 4.90",           "cve": "CVE-2019-10149", "sev": "CRITICAL", "desc": "Exim 4.90 RCPT TO command injection — remote root execution"},
-    {"match": "exim 4.91",           "cve": "CVE-2019-10149", "sev": "CRITICAL", "desc": "Exim 4.91 RCPT TO command injection — remote root execution"},
-    {"match": "exim 4.92",           "cve": "CVE-2019-15846", "sev": "CRITICAL", "desc": "Exim 4.92 SNI buffer overflow — unauthenticated remote root"},
-    {"match": "exim 4.94",           "cve": "CVE-2020-28017", "sev": "CRITICAL", "desc": "Exim 4.94 21Nails — integer overflow in receive_add_recipient"},
-    {"match": "postfix",             "cve": "INFO",           "sev": "LOW",      "desc": "Postfix SMTP banner visible — verify TLS and relay restrictions"},
-    {"match": "sendmail",            "cve": "INFO",           "sev": "LOW",      "desc": "Sendmail — verify fully patched and not open relay"},
-    {"match": "dovecot",             "cve": "CVE-2019-11500", "sev": "CRITICAL", "desc": "Dovecot pre-auth buffer overflow via IMAP/ManageSieve (verify patched)"},
-    {"match": "windows 2000",        "cve": "MS08-067",       "sev": "CRITICAL", "desc": "Windows 2000 EOL — MS08-067 / Conficker likely unpatched"},
-    {"match": "windows xp",          "cve": "MS17-010",       "sev": "CRITICAL", "desc": "Windows XP EOL — EternalBlue / WannaCry likely unpatched"},
-    {"match": "windows server 2003", "cve": "MS17-010",       "sev": "CRITICAL", "desc": "Windows Server 2003 EOL — EternalBlue RCE likely unpatched"},
-    {"match": "windows server 2008", "cve": "CVE-2019-0708",  "sev": "CRITICAL", "desc": "Windows Server 2008 — BlueKeep RDP unauthenticated RCE if unpatched"},
-    {"match": "windows server 2012", "cve": "CVE-2020-0796",  "sev": "CRITICAL", "desc": "Windows Server 2012 — SMBGhost RCE (SMBv3 compression) if unpatched"},
-    {"match": "samba 3.",            "cve": "CVE-2017-7494",  "sev": "CRITICAL", "desc": "Samba 3.x SambaCry — unauthenticated RCE via writable share"},
-    {"match": "samba 4.5",           "cve": "CVE-2017-7494",  "sev": "CRITICAL", "desc": "Samba 4.5 SambaCry — unauthenticated RCE via writable share"},
-    {"match": "rfb 003.003",         "cve": "CVE-2006-2369",  "sev": "CRITICAL", "desc": "VNC 3.3 — auth type 'None' exists, trivially bypassable"},
-    {"match": "rfb 003.007",         "cve": "INFO",           "sev": "HIGH",     "desc": "VNC exposed — verify strong password and network firewall"},
-    {"match": "rfb 003.008",         "cve": "INFO",           "sev": "HIGH",     "desc": "VNC exposed — verify NLA / strong auth and access controls"},
-    {"match": "+pong",               "cve": "CVE-2022-0543",  "sev": "HIGH",     "desc": "Redis responsive — CVE-2022-0543 Lua sandbox escape if unpatched"},
-    {"match": "redis",               "cve": "CVE-2022-0543",  "sev": "HIGH",     "desc": "Redis exposed — verify requirepass set and bind to localhost"},
-    {"match": "mongos",              "cve": "INFO",           "sev": "HIGH",     "desc": "MongoDB exposed — verify authentication is enabled"},
-    {"match": "mongodb",             "cve": "CVE-2021-20328", "sev": "HIGH",     "desc": "MongoDB — verify client-side field level encryption and auth"},
-    {"match": "mysql",               "cve": "INFO",           "sev": "MEDIUM",   "desc": "MySQL banner visible — verify bind-address and access grants"},
-    {"match": "mariadb",             "cve": "INFO",           "sev": "MEDIUM",   "desc": "MariaDB exposed — verify user grants and bind-address"},
-    {"match": "postgresql",          "cve": "INFO",           "sev": "MEDIUM",   "desc": "PostgreSQL exposed — verify pg_hba.conf rules and SSL mode"},
-    {"match": "cassandra",           "cve": "CVE-2021-44521", "sev": "CRITICAL", "desc": "Cassandra — CVE-2021-44521 RCE via UDFs if scripting enabled"},
-    {"match": "influxdb",            "cve": "CVE-2019-20933", "sev": "CRITICAL", "desc": "InfluxDB — CVE-2019-20933 authentication bypass via JWT"},
-    {"match": "docker",              "cve": "CVE-2019-5736",  "sev": "CRITICAL", "desc": "Docker daemon exposed — CVE-2019-5736 runc container escape"},
-    {"match": "kubernetes",          "cve": "CVE-2018-1002105","sev":"CRITICAL",  "desc": "Kubernetes API exposed — CVE-2018-1002105 privilege escalation"},
-    {"match": "etcd",                "cve": "INFO",           "sev": "CRITICAL", "desc": "etcd exposed — unauth access yields full cluster credentials"},
-    {"match": "elasticsearch",       "cve": "CVE-2021-22145", "sev": "HIGH",     "desc": "Elasticsearch exposed — verify X-Pack auth; memory disclosure risk"},
-    {"match": "kibana",              "cve": "CVE-2019-7609",  "sev": "CRITICAL", "desc": "Kibana — CVE-2019-7609 prototype pollution RCE if unpatched"},
-    {"match": "jenkins",             "cve": "CVE-2019-1003000","sev":"CRITICAL",  "desc": "Jenkins — CVE-2019-1003000 script sandbox bypass RCE"},
-    {"match": "grafana",             "cve": "CVE-2021-43798", "sev": "CRITICAL", "desc": "Grafana — CVE-2021-43798 unauthenticated path traversal"},
-    {"match": "prometheus",          "cve": "INFO",           "sev": "MEDIUM",   "desc": "Prometheus metrics exposed — may leak sensitive system data"},
-    {"match": "consul",              "cve": "CVE-2021-38698", "sev": "HIGH",     "desc": "Consul — verify ACLs enabled; unauthenticated access risks"},
-    {"match": "vault",               "cve": "INFO",           "sev": "MEDIUM",   "desc": "HashiCorp Vault — verify sealed status and audit logging"},
-    {"match": "mqtt",                "cve": "INFO",           "sev": "MEDIUM",   "desc": "MQTT broker exposed — verify anonymous access disabled"},
-    {"match": "mosquitto",           "cve": "CVE-2021-28166", "sev": "HIGH",     "desc": "Mosquitto MQTT — CVE-2021-28166 DoS via v5 CONNECT packet"},
-    {"match": "snmp",                "cve": "CVE-2017-6736",  "sev": "HIGH",     "desc": "SNMP visible — v1/v2c use cleartext community strings (use v3)"},
-    {"match": "mikrotik",            "cve": "CVE-2018-14847", "sev": "CRITICAL", "desc": "Mikrotik — CVE-2018-14847 Winbox credential theft (verify patched)"},
-    {"match": "cisco ios",           "cve": "CVE-2018-0171",  "sev": "CRITICAL", "desc": "Cisco IOS — CVE-2018-0171 Smart Install RCE (verify disabled)"},
-    {"match": "fortios",             "cve": "CVE-2022-40684", "sev": "CRITICAL", "desc": "FortiOS — CVE-2022-40684 auth bypass on management interface"},
-    {"match": "prtg",                "cve": "CVE-2018-9276",  "sev": "CRITICAL", "desc": "PRTG Network Monitor — OS command injection in notifications"},
-    {"match": "version",             "cve": "INFO",           "sev": "MEDIUM",   "desc": "Possible Memcached — verify not WAN-exposed (UDP amplification risk)"},
-    {"match": "ssl_version: ssl3",   "cve": "CVE-2014-3566",  "sev": "HIGH",     "desc": "SSLv3 enabled — POODLE attack possible, disable SSLv3"},
-    {"match": "heartbeat",           "cve": "CVE-2014-0160",  "sev": "CRITICAL", "desc": "OpenSSL Heartbleed — TLS heartbeat extension memory leak"}
+  {
+    "match": "vsftpd 2.3.4",
+    "cve": "CVE-2011-2523",
+    "sev": "CRITICAL",
+    "desc": "vsftpd 2.3.4 backdoor — smiley-face login triggers root shell on :6200"
+  },
+  {
+    "match": "vsftpd 2.3.2",
+    "cve": "CVE-2009-0397",
+    "sev": "MEDIUM",
+    "desc": "vsftpd 2.3.2 memory leak in FTP data channel under load"
+  },
+  {
+    "match": "vsftpd 1.",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "vsftpd 1.x — end of life, no security patches"
+  },
+  {
+    "match": "proftpd 1.3.5",
+    "cve": "CVE-2015-3306",
+    "sev": "CRITICAL",
+    "desc": "ProFTPD 1.3.5 mod_copy — unauthenticated file read/write anywhere on disk"
+  },
+  {
+    "match": "proftpd 1.3.3",
+    "cve": "CVE-2010-4221",
+    "sev": "CRITICAL",
+    "desc": "ProFTPD 1.3.3 remote code execution via crafted telnet IAC sequence"
+  },
+  {
+    "match": "proftpd 1.3.2",
+    "cve": "CVE-2009-3555",
+    "sev": "HIGH",
+    "desc": "ProFTPD 1.3.2 TLS renegotiation MitM vulnerability"
+  },
+  {
+    "match": "proftpd 1.2",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "ProFTPD 1.2.x — end of life, multiple known RCE vulnerabilities"
+  },
+  {
+    "match": "wu-2.6",
+    "cve": "CVE-2000-0573",
+    "sev": "CRITICAL",
+    "desc": "wu-ftpd 2.6.x format string vulnerability — EOL, replace immediately"
+  },
+  {
+    "match": "wu-ftp",
+    "cve": "CVE-2001-0550",
+    "sev": "CRITICAL",
+    "desc": "wu-ftpd glob expansion heap overflow — EOL software"
+  },
+  {
+    "match": "pure-ftpd",
+    "cve": "CVE-2020-9274",
+    "sev": "MEDIUM",
+    "desc": "Pure-FTPd off-by-one in input parsing — verify patched to 1.0.49+"
+  },
+  {
+    "match": "filezilla server 0.",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "FileZilla Server 0.x — end of life, upgrade to 1.x+"
+  },
+  {
+    "match": "microsoft ftp service 5.",
+    "cve": "CVE-2009-3023",
+    "sev": "CRITICAL",
+    "desc": "IIS 5.x FTP stack overflow — EOL, replace immediately"
+  },
+  {
+    "match": "microsoft ftp service 6.",
+    "cve": "CVE-2010-3972",
+    "sev": "CRITICAL",
+    "desc": "IIS 6.0 FTP heap overflow — unauthenticated remote code execution"
+  },
+  {
+    "match": "microsoft ftp service 7.",
+    "cve": "CVE-2010-3972",
+    "sev": "HIGH",
+    "desc": "IIS 7.x FTP — verify patched against CVE-2010-3972 heap overflow"
+  },
+  {
+    "match": "bftpd",
+    "cve": "CVE-2007-2010",
+    "sev": "HIGH",
+    "desc": "Bftpd format string vulnerability — verify patched to current version"
+  },
+  {
+    "match": "anonymous",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "FTP anonymous login enabled — audit files accessible without credentials"
+  },
+  {
+    "match": "openssh_2.",
+    "cve": "CVE-2002-0640",
+    "sev": "CRITICAL",
+    "desc": "OpenSSH 2.x challenge-response memory corruption — remote root exploit"
+  },
+  {
+    "match": "openssh_3.0",
+    "cve": "CVE-2002-0083",
+    "sev": "CRITICAL",
+    "desc": "OpenSSH 3.0 integer overflow in channel code — remote root"
+  },
+  {
+    "match": "openssh_3.4",
+    "cve": "CVE-2002-0639",
+    "sev": "CRITICAL",
+    "desc": "OpenSSH 3.4 SKEY/BSD_AUTH off-by-one buffer overflow"
+  },
+  {
+    "match": "openssh_3.5",
+    "cve": "CVE-2003-0693",
+    "sev": "CRITICAL",
+    "desc": "OpenSSH 3.5 PAM authentication buffer management error"
+  },
+  {
+    "match": "openssh_3.7",
+    "cve": "CVE-2003-0693",
+    "sev": "CRITICAL",
+    "desc": "OpenSSH 3.7 PAM buffer management — multiple vulnerabilities"
+  },
+  {
+    "match": "openssh_4.3",
+    "cve": "CVE-2006-5051",
+    "sev": "HIGH",
+    "desc": "OpenSSH 4.3 signal handler race condition — use-after-free"
+  },
+  {
+    "match": "openssh_4.6",
+    "cve": "CVE-2008-1483",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 4.6 X11 cookie theft via SSH X11 forwarding"
+  },
+  {
+    "match": "openssh_5.0",
+    "cve": "CVE-2009-2904",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 5.0 ChrootDirectory privilege escalation via hardlinks"
+  },
+  {
+    "match": "openssh_5.4",
+    "cve": "CVE-2010-4478",
+    "sev": "HIGH",
+    "desc": "OpenSSH 5.4 J-PAKE auth bypass (non-standard builds only)"
+  },
+  {
+    "match": "openssh_6.2",
+    "cve": "CVE-2014-2532",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 6.2 AcceptEnv wildcard restriction bypass"
+  },
+  {
+    "match": "openssh_6.6",
+    "cve": "CVE-2015-5600",
+    "sev": "HIGH",
+    "desc": "OpenSSH 6.6 keyboard-interactive MaxAuthTries bypass — brute force"
+  },
+  {
+    "match": "openssh_6.7",
+    "cve": "CVE-2015-6563",
+    "sev": "HIGH",
+    "desc": "OpenSSH 6.7 PAM privilege separation account hijack"
+  },
+  {
+    "match": "openssh_6.8",
+    "cve": "CVE-2016-0777",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 6.8 client UseRoaming information leak"
+  },
+  {
+    "match": "openssh_6.9",
+    "cve": "CVE-2016-0777",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 6.9 client roaming info leak"
+  },
+  {
+    "match": "openssh_7.0",
+    "cve": "CVE-2016-0778",
+    "sev": "HIGH",
+    "desc": "OpenSSH 7.0 client roaming buffer overflow (UseRoaming, non-default)"
+  },
+  {
+    "match": "openssh_7.1",
+    "cve": "CVE-2016-0778",
+    "sev": "HIGH",
+    "desc": "OpenSSH 7.1 client roaming buffer overflow"
+  },
+  {
+    "match": "openssh_7.2",
+    "cve": "CVE-2016-6515",
+    "sev": "HIGH",
+    "desc": "OpenSSH 7.2 password auth DoS — unbounded length accepted"
+  },
+  {
+    "match": "openssh_7.3",
+    "cve": "CVE-2017-15906",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 7.3 sftp-server null dereference on zero-length filename"
+  },
+  {
+    "match": "openssh_7.4",
+    "cve": "CVE-2018-15473",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 7.4 username enumeration via timing oracle"
+  },
+  {
+    "match": "openssh_7.5",
+    "cve": "CVE-2018-15473",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 7.5 username enumeration timing side-channel"
+  },
+  {
+    "match": "openssh_7.6",
+    "cve": "CVE-2018-15473",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 7.6 username enumeration timing side-channel"
+  },
+  {
+    "match": "openssh_7.7",
+    "cve": "CVE-2018-15473",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 7.7 username enumeration (last affected version)"
+  },
+  {
+    "match": "openssh_7.8",
+    "cve": "CVE-2019-6111",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 7.8 scp arbitrary file overwrite via malicious server"
+  },
+  {
+    "match": "openssh_7.9",
+    "cve": "CVE-2019-6111",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 7.9 scp path traversal and file overwrite via server"
+  },
+  {
+    "match": "openssh_8.0",
+    "cve": "CVE-2020-14145",
+    "sev": "LOW",
+    "desc": "OpenSSH 8.0 observable discrepancy in host key algorithm selection"
+  },
+  {
+    "match": "openssh_8.2",
+    "cve": "CVE-2020-15778",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 8.2 scp shell injection via backtick in destination"
+  },
+  {
+    "match": "openssh_8.3",
+    "cve": "CVE-2021-28041",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 8.3 double-free in ssh-agent via forged agent identity"
+  },
+  {
+    "match": "openssh_8.4",
+    "cve": "CVE-2021-41617",
+    "sev": "HIGH",
+    "desc": "OpenSSH 8.4 privilege escalation via AuthorizedKeysCommand supplemental groups"
+  },
+  {
+    "match": "openssh_8.5",
+    "cve": "CVE-2021-41617",
+    "sev": "HIGH",
+    "desc": "OpenSSH 8.5 supplemental group privilege escalation"
+  },
+  {
+    "match": "openssh_8.6",
+    "cve": "CVE-2021-41617",
+    "sev": "HIGH",
+    "desc": "OpenSSH 8.6 AuthorizedKeysCommand privilege escalation"
+  },
+  {
+    "match": "openssh_8.7",
+    "cve": "CVE-2021-41617",
+    "sev": "HIGH",
+    "desc": "OpenSSH 8.7 privilege escalation via supplemental groups"
+  },
+  {
+    "match": "openssh_9.1",
+    "cve": "CVE-2023-25136",
+    "sev": "MEDIUM",
+    "desc": "OpenSSH 9.1 pre-auth double-free in sshd (memory corruption, limited exploitability)"
+  },
+  {
+    "match": "openssh_9.3p2",
+    "cve": "CVE-2023-38408",
+    "sev": "CRITICAL",
+    "desc": "OpenSSH 9.3p2 ssh-agent remote code execution via forwarded agent socket — patch to 9.3p2"
+  },
+  {
+    "match": "dropbear_0.",
+    "cve": "CVE-2012-0920",
+    "sev": "HIGH",
+    "desc": "Dropbear 0.x use-after-free in post-auth session handling"
+  },
+  {
+    "match": "dropbear_2016",
+    "cve": "CVE-2016-7406",
+    "sev": "CRITICAL",
+    "desc": "Dropbear 2016.x format string in dbclient — remote code execution"
+  },
+  {
+    "match": "dropbear_2017",
+    "cve": "CVE-2017-9078",
+    "sev": "HIGH",
+    "desc": "Dropbear 2017.75 use-after-free via child process cleanup"
+  },
+  {
+    "match": "dropbear_2018",
+    "cve": "CVE-2018-15599",
+    "sev": "MEDIUM",
+    "desc": "Dropbear 2018.76 username enumeration timing side-channel"
+  },
+  {
+    "match": "libssh_0.6",
+    "cve": "CVE-2014-0017",
+    "sev": "MEDIUM",
+    "desc": "libssh 0.6.x PRNG state not reseeded after fork — weak keys possible"
+  },
+  {
+    "match": "libssh_0.7",
+    "cve": "CVE-2018-10933",
+    "sev": "CRITICAL",
+    "desc": "libssh 0.7.x server-mode auth bypass — accepts auth without credentials"
+  },
+  {
+    "match": "libssh_0.8",
+    "cve": "CVE-2018-10933",
+    "sev": "CRITICAL",
+    "desc": "libssh 0.8.x authentication bypass (CVE-2018-10933)"
+  },
+  {
+    "match": "libssh2",
+    "cve": "CVE-2019-3855",
+    "sev": "CRITICAL",
+    "desc": "libssh2 integer overflow during handshake — possible RCE"
+  },
+  {
+    "match": "login:",
+    "cve": "INSECURE",
+    "sev": "CRITICAL",
+    "desc": "Telnet active — all traffic including credentials sent in CLEARTEXT"
+  },
+  {
+    "match": "telnet",
+    "cve": "INSECURE",
+    "sev": "CRITICAL",
+    "desc": "Telnet service — replace with SSH immediately"
+  },
+  {
+    "match": "telnetd",
+    "cve": "CVE-2011-4862",
+    "sev": "CRITICAL",
+    "desc": "BSD telnetd encryption key ID overflow — pre-auth remote code execution"
+  },
+  {
+    "match": "rlogin",
+    "cve": "INSECURE",
+    "sev": "CRITICAL",
+    "desc": "rlogin — cleartext, trust-based auth, trivially spoofable; replace with SSH"
+  },
+  {
+    "match": "rsh",
+    "cve": "INSECURE",
+    "sev": "CRITICAL",
+    "desc": "rsh (remote shell) — cleartext and trust-based; replace with SSH"
+  },
+  {
+    "match": "in.ftpd",
+    "cve": "CVE-2001-0826",
+    "sev": "HIGH",
+    "desc": "inetd ftpd — legacy FTP daemon, typically ancient and unpatched"
+  },
+  {
+    "match": "apache/1.3",
+    "cve": "CVE-2002-0392",
+    "sev": "CRITICAL",
+    "desc": "Apache 1.3.x chunked transfer encoding overflow — EOL, replace immediately"
+  },
+  {
+    "match": "apache/2.0.",
+    "cve": "EOL",
+    "sev": "CRITICAL",
+    "desc": "Apache 2.0.x — end of life since 2010, no security patches"
+  },
+  {
+    "match": "apache/2.2.",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "Apache 2.2.x — end of life Dec 2017, multiple known vulnerabilities"
+  },
+  {
+    "match": "apache/2.2.17",
+    "cve": "CVE-2011-3192",
+    "sev": "HIGH",
+    "desc": "Apache 2.2.17 Range header DoS (Apache Killer — 1024 ranges)"
+  },
+  {
+    "match": "apache/2.2.25",
+    "cve": "CVE-2013-1862",
+    "sev": "MEDIUM",
+    "desc": "Apache 2.2.25 mod_rewrite log injection via crafted request"
+  },
+  {
+    "match": "apache/2.2.31",
+    "cve": "CVE-2016-0736",
+    "sev": "HIGH",
+    "desc": "Apache 2.2.31 mod_session_crypto padding oracle vulnerability"
+  },
+  {
+    "match": "apache/2.4.1",
+    "cve": "CVE-2012-0883",
+    "sev": "MEDIUM",
+    "desc": "Apache 2.4.1 LD_LIBRARY_PATH injection in envvars"
+  },
+  {
+    "match": "apache/2.4.10",
+    "cve": "CVE-2014-0226",
+    "sev": "MEDIUM",
+    "desc": "Apache 2.4.10 mod_status race condition — local privilege escalation"
+  },
+  {
+    "match": "apache/2.4.18",
+    "cve": "CVE-2016-1546",
+    "sev": "MEDIUM",
+    "desc": "Apache 2.4.18 mod_http2 slow read DoS"
+  },
+  {
+    "match": "apache/2.4.20",
+    "cve": "CVE-2016-4979",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.20 mod_ssl client certificate bypass via HTTP/2"
+  },
+  {
+    "match": "apache/2.4.25",
+    "cve": "CVE-2017-7679",
+    "sev": "CRITICAL",
+    "desc": "Apache 2.4.25 mod_mime buffer overread — memory disclosure and crash"
+  },
+  {
+    "match": "apache/2.4.27",
+    "cve": "CVE-2017-9798",
+    "sev": "MEDIUM",
+    "desc": "Apache 2.4.27 OPTIONS use-after-free (Optionsbleed) — memory leak"
+  },
+  {
+    "match": "apache/2.4.29",
+    "cve": "CVE-2017-15715",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.29 mod_authnz_ldap out-of-bounds write"
+  },
+  {
+    "match": "apache/2.4.33",
+    "cve": "CVE-2018-1312",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.33 mod_auth_digest nonce replay across servers"
+  },
+  {
+    "match": "apache/2.4.38",
+    "cve": "CVE-2019-0211",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.38 shared-memory privilege escalation via mod_prefork/worker"
+  },
+  {
+    "match": "apache/2.4.43",
+    "cve": "CVE-2020-9490",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.43 mod_http2 push diary null pointer — crash DoS"
+  },
+  {
+    "match": "apache/2.4.46",
+    "cve": "CVE-2021-26691",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.46 mod_session heap overflow on malformed session data"
+  },
+  {
+    "match": "apache/2.4.49",
+    "cve": "CVE-2021-41773",
+    "sev": "CRITICAL",
+    "desc": "Apache 2.4.49 path traversal + RCE via mod_cgi — unauthenticated, weaponised immediately"
+  },
+  {
+    "match": "apache/2.4.50",
+    "cve": "CVE-2021-42013",
+    "sev": "CRITICAL",
+    "desc": "Apache 2.4.50 path traversal bypass — patch for CVE-2021-41773 was incomplete"
+  },
+  {
+    "match": "apache/2.4.51",
+    "cve": "CVE-2021-44790",
+    "sev": "CRITICAL",
+    "desc": "Apache 2.4.51 mod_lua multipart buffer overflow — potential RCE"
+  },
+  {
+    "match": "apache/2.4.52",
+    "cve": "CVE-2022-22720",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.52 HTTP request smuggling via incomplete keepalive"
+  },
+  {
+    "match": "apache/2.4.53",
+    "cve": "CVE-2022-26377",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.53 mod_proxy_ajp request smuggling via AJP"
+  },
+  {
+    "match": "apache/2.4.54",
+    "cve": "CVE-2022-36760",
+    "sev": "HIGH",
+    "desc": "Apache 2.4.54 mod_proxy_ajp HTTP/2 request smuggling"
+  },
+  {
+    "match": "apache/2.4.55",
+    "cve": "CVE-2023-25690",
+    "sev": "CRITICAL",
+    "desc": "Apache 2.4.55 HTTP request smuggling via RewriteRule + mod_proxy"
+  },
+  {
+    "match": "nginx/0.",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "nginx 0.x — end of life, many known vulnerabilities"
+  },
+  {
+    "match": "nginx/1.2.",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "nginx 1.2.x — end of life stable branch"
+  },
+  {
+    "match": "nginx/1.4.",
+    "cve": "CVE-2013-2028",
+    "sev": "CRITICAL",
+    "desc": "nginx 1.4.0 stack overflow in chunked transfer encoding parser"
+  },
+  {
+    "match": "nginx/1.6.",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "nginx 1.6.x — end of life stable branch"
+  },
+  {
+    "match": "nginx/1.8.",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "nginx 1.8.x — end of life stable branch"
+  },
+  {
+    "match": "nginx/1.10.",
+    "cve": "CVE-2016-4450",
+    "sev": "HIGH",
+    "desc": "nginx 1.10.x null pointer dereference in HTTP/2 — crash DoS"
+  },
+  {
+    "match": "nginx/1.13.",
+    "cve": "CVE-2017-7529",
+    "sev": "MEDIUM",
+    "desc": "nginx 1.13.x integer overflow in range filter — information leak"
+  },
+  {
+    "match": "nginx/1.14.",
+    "cve": "CVE-2019-9511",
+    "sev": "HIGH",
+    "desc": "nginx 1.14.x HTTP/2 Data Dribble DoS"
+  },
+  {
+    "match": "nginx/1.15.",
+    "cve": "CVE-2019-9511",
+    "sev": "HIGH",
+    "desc": "nginx 1.15.x HTTP/2 Data Dribble DoS"
+  },
+  {
+    "match": "nginx/1.16.",
+    "cve": "CVE-2019-20372",
+    "sev": "MEDIUM",
+    "desc": "nginx 1.16.x HTTP request smuggling via invalid Transfer-Encoding"
+  },
+  {
+    "match": "nginx/1.18.",
+    "cve": "CVE-2021-23017",
+    "sev": "HIGH",
+    "desc": "nginx 1.18.x DNS resolver 1-byte heap overflow — off-by-one write"
+  },
+  {
+    "match": "nginx/1.20.",
+    "cve": "CVE-2022-41741",
+    "sev": "HIGH",
+    "desc": "nginx 1.20.x mp4 module use-after-free (if mp4 module compiled in)"
+  },
+  {
+    "match": "microsoft-iis/5.",
+    "cve": "CVE-2001-0507",
+    "sev": "CRITICAL",
+    "desc": "IIS 5.x printer extension buffer overflow — EOL, replace immediately"
+  },
+  {
+    "match": "microsoft-iis/6.0",
+    "cve": "CVE-2017-7269",
+    "sev": "CRITICAL",
+    "desc": "IIS 6.0 WebDAV ScStoragePathFromUrl overflow — unauthenticated RCE, exploited by ShadowBrokers"
+  },
+  {
+    "match": "microsoft-iis/7.5",
+    "cve": "CVE-2010-3972",
+    "sev": "HIGH",
+    "desc": "IIS 7.5 FTP heap overflow — remote unauthenticated code execution"
+  },
+  {
+    "match": "microsoft-iis/8.5",
+    "cve": "CVE-2014-4078",
+    "sev": "MEDIUM",
+    "desc": "IIS 8.5 URL filtering bypass — verify MS14-076 applied"
+  },
+  {
+    "match": "microsoft-iis/10.",
+    "cve": "CVE-2022-21907",
+    "sev": "CRITICAL",
+    "desc": "IIS 10.x HTTP Trailer Support heap overflow — unauthenticated RCE via HTTP trailer header"
+  },
+  {
+    "match": "lighttpd/1.4.4",
+    "cve": "CVE-2010-0295",
+    "sev": "HIGH",
+    "desc": "lighttpd 1.4.4x slow request DoS — high CPU exhaustion"
+  },
+  {
+    "match": "lighttpd/1.4.5",
+    "cve": "CVE-2022-41556",
+    "sev": "HIGH",
+    "desc": "lighttpd 1.4.5x resource leak leading to resource exhaustion DoS"
+  },
+  {
+    "match": "goahead",
+    "cve": "CVE-2021-42342",
+    "sev": "CRITICAL",
+    "desc": "GoAhead embedded web server env-var injection RCE via CGI"
+  },
+  {
+    "match": "webs",
+    "cve": "CVE-2014-9707",
+    "sev": "HIGH",
+    "desc": "GoAhead/Webs path traversal — common in IoT routers"
+  },
+  {
+    "match": "boa/0.",
+    "cve": "CVE-2021-33558",
+    "sev": "HIGH",
+    "desc": "Boa 0.x embedded web server — EOL since 2005, info disclosure and DoS unpatched"
+  },
+  {
+    "match": "mini_httpd",
+    "cve": "CVE-2009-4490",
+    "sev": "HIGH",
+    "desc": "mini_httpd format string — commonly found in IoT and embedded systems"
+  },
+  {
+    "match": "hiawatha",
+    "cve": "CVE-2019-11541",
+    "sev": "MEDIUM",
+    "desc": "Hiawatha reverse proxy buffer overflow — verify patched"
+  },
+  {
+    "match": "php/4.",
+    "cve": "EOL",
+    "sev": "CRITICAL",
+    "desc": "PHP 4.x — end of life Dec 2007, hundreds of unpatched vulnerabilities"
+  },
+  {
+    "match": "php/5.0",
+    "cve": "EOL",
+    "sev": "CRITICAL",
+    "desc": "PHP 5.0.x — end of life, replace immediately"
+  },
+  {
+    "match": "php/5.1",
+    "cve": "EOL",
+    "sev": "CRITICAL",
+    "desc": "PHP 5.1.x — end of life, multiple critical RCE vulnerabilities unpatched"
+  },
+  {
+    "match": "php/5.2",
+    "cve": "EOL",
+    "sev": "CRITICAL",
+    "desc": "PHP 5.2.x — end of life Jan 2011, severe security risks"
+  },
+  {
+    "match": "php/5.3",
+    "cve": "EOL",
+    "sev": "CRITICAL",
+    "desc": "PHP 5.3.x — end of life Aug 2014"
+  },
+  {
+    "match": "php/5.4",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "PHP 5.4.x — end of life Sep 2015"
+  },
+  {
+    "match": "php/5.5",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "PHP 5.5.x — end of life Jul 2016"
+  },
+  {
+    "match": "php/5.6",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "PHP 5.6.x — end of life Dec 2018, no security patches"
+  },
+  {
+    "match": "php/7.0",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "PHP 7.0.x — end of life Dec 2018"
+  },
+  {
+    "match": "php/7.1",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "PHP 7.1.x — end of life Dec 2019"
+  },
+  {
+    "match": "php/7.2",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "PHP 7.2.x — end of life Nov 2020"
+  },
+  {
+    "match": "php/7.3",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "PHP 7.3.x — end of life Dec 2021"
+  },
+  {
+    "match": "php/7.4",
+    "cve": "EOL",
+    "sev": "LOW",
+    "desc": "PHP 7.4.x — end of life Nov 2022, upgrade to 8.1+"
+  },
+  {
+    "match": "php/8.0",
+    "cve": "EOL",
+    "sev": "LOW",
+    "desc": "PHP 8.0.x — end of life Nov 2023, upgrade to 8.2+"
+  },
+  {
+    "match": "apache tomcat/5.",
+    "cve": "EOL",
+    "sev": "CRITICAL",
+    "desc": "Apache Tomcat 5.x — end of life, replace immediately"
+  },
+  {
+    "match": "apache tomcat/6.",
+    "cve": "CVE-2017-12617",
+    "sev": "CRITICAL",
+    "desc": "Tomcat 6.x JSP upload RCE — EOL branch, upgrade to 9.x+"
+  },
+  {
+    "match": "apache tomcat/7.",
+    "cve": "CVE-2020-1938",
+    "sev": "CRITICAL",
+    "desc": "Tomcat 7.x Ghostcat AJP file read/RCE (CVE-2020-1938) — disable AJP or upgrade"
+  },
+  {
+    "match": "apache tomcat/8.0",
+    "cve": "CVE-2020-1938",
+    "sev": "CRITICAL",
+    "desc": "Tomcat 8.0.x Ghostcat + EOL sub-branch — upgrade to 8.5+"
+  },
+  {
+    "match": "apache tomcat/8.5",
+    "cve": "CVE-2022-34305",
+    "sev": "MEDIUM",
+    "desc": "Tomcat 8.5.x HTML Manager XSS via partial PUT — verify patched"
+  },
+  {
+    "match": "apache tomcat/9.",
+    "cve": "CVE-2023-28708",
+    "sev": "MEDIUM",
+    "desc": "Tomcat 9.x SessionPersistenceManager path traversal — verify patched"
+  },
+  {
+    "match": "apache tomcat/10.",
+    "cve": "CVE-2023-41080",
+    "sev": "MEDIUM",
+    "desc": "Tomcat 10.x open redirect in FormAuthenticator — verify patched"
+  },
+  {
+    "match": "apache-coyote",
+    "cve": "CVE-2020-1938",
+    "sev": "HIGH",
+    "desc": "Tomcat via Coyote connector — check if AJP port 8009 exposed (Ghostcat)"
+  },
+  {
+    "match": "jboss",
+    "cve": "CVE-2017-12149",
+    "sev": "CRITICAL",
+    "desc": "JBoss AS 5/6 Java deserialization RCE via /invoker/JMXInvokerServlet — widely exploited"
+  },
+  {
+    "match": "wildfly",
+    "cve": "CVE-2020-25640",
+    "sev": "MEDIUM",
+    "desc": "WildFly log4j2 subsystem privilege escalation — verify patched"
+  },
+  {
+    "match": "weblogic",
+    "cve": "CVE-2020-14882",
+    "sev": "CRITICAL",
+    "desc": "Oracle WebLogic console unauthenticated RCE — actively exploited"
+  },
+  {
+    "match": "oracle weblogic",
+    "cve": "CVE-2021-2109",
+    "sev": "CRITICAL",
+    "desc": "Oracle WebLogic RCE via IIOP/T3 protocol"
+  },
+  {
+    "match": "websphere",
+    "cve": "CVE-2021-44228",
+    "sev": "CRITICAL",
+    "desc": "IBM WebSphere — may be vulnerable to Log4Shell if using log4j2 — check version"
+  },
+  {
+    "match": "jetty(9.",
+    "cve": "CVE-2021-28169",
+    "sev": "MEDIUM",
+    "desc": "Jetty 9.x Utility.toString() infinite loop DoS"
+  },
+  {
+    "match": "jetty(10.",
+    "cve": "CVE-2021-34428",
+    "sev": "MEDIUM",
+    "desc": "Jetty 10.x session handling null pointer DoS"
+  },
+  {
+    "match": "glassfish",
+    "cve": "CVE-2017-1000028",
+    "sev": "HIGH",
+    "desc": "GlassFish 4.x arbitrary file read without authentication"
+  },
+  {
+    "match": "resin",
+    "cve": "CVE-2021-44139",
+    "sev": "HIGH",
+    "desc": "Caucho Resin 4.x XXE and file read in admin interface"
+  },
+  {
+    "match": "log4j",
+    "cve": "CVE-2021-44228",
+    "sev": "CRITICAL",
+    "desc": "Log4j referenced — Log4Shell RCE if log4j 2.0-2.14.1 in use (JNDI injection)"
+  },
+  {
+    "match": "log4shell",
+    "cve": "CVE-2021-44228",
+    "sev": "CRITICAL",
+    "desc": "Log4Shell indicator — JNDI RCE via string interpolation in log4j2"
+  },
+  {
+    "match": "spring-boot",
+    "cve": "CVE-2022-22965",
+    "sev": "CRITICAL",
+    "desc": "Spring Boot — Spring4Shell RCE via data binding if JDK 9+ on Tomcat (CVE-2022-22965)"
+  },
+  {
+    "match": "spring framework",
+    "cve": "CVE-2022-22965",
+    "sev": "CRITICAL",
+    "desc": "Spring Framework — Spring4Shell if JDK 9+ and deployed on Tomcat"
+  },
+  {
+    "match": "werkzeug",
+    "cve": "CVE-2023-25577",
+    "sev": "HIGH",
+    "desc": "Werkzeug/Flask — CVE-2023-25577 multipart DoS; dev server exposed to network"
+  },
+  {
+    "match": "debugger pin",
+    "cve": "INFO",
+    "sev": "CRITICAL",
+    "desc": "Werkzeug debug console exposed — allows arbitrary Python code execution"
+  },
+  {
+    "match": "development server",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "Development server exposed — not hardened for production; likely debug mode active"
+  },
+  {
+    "match": "xampp",
+    "cve": "INFO",
+    "sev": "CRITICAL",
+    "desc": "XAMPP development stack — default credentials, phpMyAdmin exposed, no hardening"
+  },
+  {
+    "match": "wamp",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "WAMP dev stack exposed — likely weak credentials and debug mode active"
+  },
+  {
+    "match": "shellshock",
+    "cve": "CVE-2014-6271",
+    "sev": "CRITICAL",
+    "desc": "Shellshock indicator — CGI with Bash < 4.3p25; arbitrary command execution"
+  },
+  {
+    "match": "cgi-bin",
+    "cve": "CVE-2014-6271",
+    "sev": "HIGH",
+    "desc": "CGI endpoint present — check for Shellshock if Bash version < 4.3 patch 25"
+  },
+  {
+    "match": "exim 4.87",
+    "cve": "CVE-2019-10149",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.87 RCPT TO command injection — unauthenticated remote root"
+  },
+  {
+    "match": "exim 4.88",
+    "cve": "CVE-2019-10149",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.88 RCPT TO command injection — remote root"
+  },
+  {
+    "match": "exim 4.89",
+    "cve": "CVE-2019-10149",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.89 RCPT TO command injection — remote root"
+  },
+  {
+    "match": "exim 4.90",
+    "cve": "CVE-2019-10149",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.90 RCPT TO command injection — remote root"
+  },
+  {
+    "match": "exim 4.91",
+    "cve": "CVE-2019-10149",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.91 RCPT TO remote root (return of the WIZard)"
+  },
+  {
+    "match": "exim 4.92",
+    "cve": "CVE-2019-15846",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.92 SNI buffer overflow — pre-auth remote code execution"
+  },
+  {
+    "match": "exim 4.93",
+    "cve": "CVE-2020-28017",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.93 21Nails — integer overflow in receive_add_recipient"
+  },
+  {
+    "match": "exim 4.94",
+    "cve": "CVE-2020-28017",
+    "sev": "CRITICAL",
+    "desc": "Exim 4.94 21Nails collection — update to 4.94.2+ immediately"
+  },
+  {
+    "match": "exim 4.95",
+    "cve": "CVE-2022-37452",
+    "sev": "HIGH",
+    "desc": "Exim 4.95 heap overflow in string_vformat — verify patched"
+  },
+  {
+    "match": "exim 4.96",
+    "cve": "CVE-2023-42117",
+    "sev": "HIGH",
+    "desc": "Exim 4.96 SMTP address parse buffer overflow — verify patched"
+  },
+  {
+    "match": "postfix",
+    "cve": "INFO",
+    "sev": "LOW",
+    "desc": "Postfix — verify TLS enforced, relay restrictions set, DMARC/SPF/DKIM configured"
+  },
+  {
+    "match": "sendmail",
+    "cve": "CVE-2014-3956",
+    "sev": "MEDIUM",
+    "desc": "Sendmail — verify fully patched and not open relay"
+  },
+  {
+    "match": "microsoft esmtp",
+    "cve": "CVE-2021-26855",
+    "sev": "CRITICAL",
+    "desc": "Microsoft Exchange SMTP — verify ProxyLogon (CVE-2021-26855) and ProxyShell patches applied"
+  },
+  {
+    "match": "exchange",
+    "cve": "CVE-2021-26855",
+    "sev": "CRITICAL",
+    "desc": "Microsoft Exchange — verify ProxyLogon/ProxyShell patches (critical 2021 RCE chain)"
+  },
+  {
+    "match": "zimbra",
+    "cve": "CVE-2022-27925",
+    "sev": "CRITICAL",
+    "desc": "Zimbra Collaboration — CVE-2022-27925 RCE via mboximport, actively exploited in the wild"
+  },
+  {
+    "match": "lotus domino",
+    "cve": "CVE-2011-0920",
+    "sev": "HIGH",
+    "desc": "IBM Lotus Domino SMTP — verify patched against directory traversal"
+  },
+  {
+    "match": "hmailserver",
+    "cve": "CVE-2012-6549",
+    "sev": "MEDIUM",
+    "desc": "hMailServer — directory traversal in IMAP, verify patched"
+  },
+  {
+    "match": "dovecot",
+    "cve": "CVE-2019-11500",
+    "sev": "CRITICAL",
+    "desc": "Dovecot 2.3.x pre-auth heap overflow in IMAP/ManageSieve — patch to 2.3.7.2+"
+  },
+  {
+    "match": "dovecot 2.2",
+    "cve": "CVE-2017-15130",
+    "sev": "HIGH",
+    "desc": "Dovecot 2.2.x TLS SNI configuration DoS"
+  },
+  {
+    "match": "cyrus",
+    "cve": "CVE-2019-18928",
+    "sev": "HIGH",
+    "desc": "Cyrus IMAP pre-auth remote heap overflow in HTTP DAV backend"
+  },
+  {
+    "match": "uw-imapd",
+    "cve": "CVE-2008-5514",
+    "sev": "HIGH",
+    "desc": "UW-IMAP literal overflow — EOL, replace with Dovecot or Cyrus"
+  },
+  {
+    "match": "mysql community server 5.5",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "MySQL 5.5.x — end of life Dec 2018, no security patches"
+  },
+  {
+    "match": "mysql community server 5.6",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "MySQL 5.6.x — end of life Feb 2021"
+  },
+  {
+    "match": "mysql community server 5.7",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "MySQL 5.7.x — end of life Oct 2023, upgrade to 8.x"
+  },
+  {
+    "match": "mariadb 10.2",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "MariaDB 10.2 — end of life May 2022"
+  },
+  {
+    "match": "mariadb 10.3",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "MariaDB 10.3 — end of life May 2023"
+  },
+  {
+    "match": "mariadb 10.4",
+    "cve": "CVE-2022-32084",
+    "sev": "HIGH",
+    "desc": "MariaDB 10.4 segfault in Item_func_in — verify patched"
+  },
+  {
+    "match": "mysql",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "MySQL/MariaDB banner — verify bind-address is 127.0.0.1 and user grants are minimal"
+  },
+  {
+    "match": "postgresql 9.",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "PostgreSQL 9.x — end of life, upgrade to 14+"
+  },
+  {
+    "match": "postgresql 10.",
+    "cve": "EOL",
+    "sev": "HIGH",
+    "desc": "PostgreSQL 10.x — end of life Nov 2022"
+  },
+  {
+    "match": "postgresql 11.",
+    "cve": "EOL",
+    "sev": "MEDIUM",
+    "desc": "PostgreSQL 11.x — end of life Nov 2023"
+  },
+  {
+    "match": "postgresql",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "PostgreSQL exposed — verify pg_hba.conf restrictions and ssl=on in postgresql.conf"
+  },
+  {
+    "match": "mongodb",
+    "cve": "CVE-2021-20328",
+    "sev": "HIGH",
+    "desc": "MongoDB — verify --auth enabled; CVE-2021-20328 client field-level encryption bypass"
+  },
+  {
+    "match": "mongos",
+    "cve": "INFO",
+    "sev": "CRITICAL",
+    "desc": "MongoDB mongos router exposed — unauthenticated access allows full data compromise"
+  },
+  {
+    "match": "+pong",
+    "cve": "CVE-2022-0543",
+    "sev": "HIGH",
+    "desc": "Redis responding — verify requirepass set; CVE-2022-0543 Lua sandbox escape on Debian/Ubuntu"
+  },
+  {
+    "match": "redis",
+    "cve": "CVE-2022-0543",
+    "sev": "HIGH",
+    "desc": "Redis exposed — unauthenticated access enables full data read/write and Lua RCE"
+  },
+  {
+    "match": "version",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "Possible Memcached — verify not WAN-exposed; UDP 11211 used in amplification DDoS attacks"
+  },
+  {
+    "match": "elasticsearch",
+    "cve": "CVE-2021-22145",
+    "sev": "HIGH",
+    "desc": "Elasticsearch — verify X-Pack auth enabled; CVE-2021-22145 memory disclosure via malformed HTTP"
+  },
+  {
+    "match": "kibana",
+    "cve": "CVE-2019-7609",
+    "sev": "CRITICAL",
+    "desc": "Kibana — CVE-2019-7609 prototype pollution RCE if < 6.6.1 or < 7.0.1"
+  },
+  {
+    "match": "couchdb",
+    "cve": "CVE-2022-24706",
+    "sev": "CRITICAL",
+    "desc": "Apache CouchDB — CVE-2022-24706 default cookie secret allows remote code execution"
+  },
+  {
+    "match": "influxdb",
+    "cve": "CVE-2019-20933",
+    "sev": "CRITICAL",
+    "desc": "InfluxDB — CVE-2019-20933 authentication bypass via empty JWT token"
+  },
+  {
+    "match": "neo4j",
+    "cve": "CVE-2021-34371",
+    "sev": "HIGH",
+    "desc": "Neo4j — CVE-2021-34371 RCE via Java deserialization in backup API"
+  },
+  {
+    "match": "etcd",
+    "cve": "INFO",
+    "sev": "CRITICAL",
+    "desc": "etcd key-value store exposed — contains full Kubernetes cluster credentials if unauthenticated"
+  },
+  {
+    "match": "consul",
+    "cve": "CVE-2021-38698",
+    "sev": "HIGH",
+    "desc": "HashiCorp Consul — verify ACLs enabled; unauthenticated exposes service catalog and KV store"
+  },
+  {
+    "match": "cassandra",
+    "cve": "CVE-2021-44521",
+    "sev": "CRITICAL",
+    "desc": "Apache Cassandra — CVE-2021-44521 RCE via UDFs if enable_user_defined_functions=true"
+  },
+  {
+    "match": "rethinkdb",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "RethinkDB admin interface exposed — no authentication by default"
+  },
+  {
+    "match": "minio",
+    "cve": "CVE-2023-28432",
+    "sev": "CRITICAL",
+    "desc": "MinIO — CVE-2023-28432 env vars disclosure including root credentials, no auth"
+  },
+  {
+    "match": "windows 2000",
+    "cve": "MS08-067",
+    "sev": "CRITICAL",
+    "desc": "Windows 2000 EOL — MS08-067 Conficker + MS17-010 EternalBlue unpatched"
+  },
+  {
+    "match": "windows xp",
+    "cve": "MS17-010",
+    "sev": "CRITICAL",
+    "desc": "Windows XP EOL — EternalBlue/WannaCry exploitable, unpatched forever"
+  },
+  {
+    "match": "windows vista",
+    "cve": "MS17-010",
+    "sev": "CRITICAL",
+    "desc": "Windows Vista EOL Apr 2017 — EternalBlue unpatched, immediate risk"
+  },
+  {
+    "match": "windows server 2003",
+    "cve": "MS17-010",
+    "sev": "CRITICAL",
+    "desc": "Windows Server 2003 EOL Jul 2015 — EternalBlue (MS17-010) unpatched"
+  },
+  {
+    "match": "windows server 2008",
+    "cve": "CVE-2019-0708",
+    "sev": "CRITICAL",
+    "desc": "Windows Server 2008 — BlueKeep RDP RCE (CVE-2019-0708) if unpatched"
+  },
+  {
+    "match": "windows server 2012",
+    "cve": "CVE-2020-0796",
+    "sev": "CRITICAL",
+    "desc": "Windows Server 2012 — SMBGhost (CVE-2020-0796) SMBv3 compression RCE if unpatched"
+  },
+  {
+    "match": "windows 7",
+    "cve": "CVE-2019-0708",
+    "sev": "CRITICAL",
+    "desc": "Windows 7 EOL Jan 2020 — BlueKeep (CVE-2019-0708) and many unpatched vulnerabilities"
+  },
+  {
+    "match": "samba 3.",
+    "cve": "CVE-2017-7494",
+    "sev": "CRITICAL",
+    "desc": "Samba 3.x SambaCry — unauthenticated RCE via writable share"
+  },
+  {
+    "match": "samba 4.5",
+    "cve": "CVE-2017-7494",
+    "sev": "CRITICAL",
+    "desc": "Samba 4.5 SambaCry RCE — writable share required, update to 4.5.10+"
+  },
+  {
+    "match": "samba 4.6",
+    "cve": "CVE-2017-7494",
+    "sev": "CRITICAL",
+    "desc": "Samba 4.6 SambaCry — update to 4.6.4+"
+  },
+  {
+    "match": "rfb 003.003",
+    "cve": "CVE-2006-2369",
+    "sev": "CRITICAL",
+    "desc": "VNC 3.3 — None auth type trivially bypassable, no encryption"
+  },
+  {
+    "match": "rfb 003.007",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "VNC exposed — no encryption in RFB 3.7; verify strong password set"
+  },
+  {
+    "match": "rfb 003.008",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "VNC exposed — verify NLA/strong auth and network firewall restriction"
+  },
+  {
+    "match": "rfb 004.001",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "VNC 4.1 — verify encryption and authentication configured"
+  },
+  {
+    "match": "tigervnc",
+    "cve": "CVE-2019-15691",
+    "sev": "HIGH",
+    "desc": "TigerVNC CVE-2019-15691 stack use-after-return in ZRLEDecoder — verify patched"
+  },
+  {
+    "match": "ultravnc",
+    "cve": "CVE-2022-24750",
+    "sev": "HIGH",
+    "desc": "UltraVNC memory corruption — update to 1.3.8+"
+  },
+  {
+    "match": "tightvnc 1.",
+    "cve": "CVE-2019-8287",
+    "sev": "HIGH",
+    "desc": "TightVNC 1.3.x heap buffer overflow — EOL, switch to TigerVNC"
+  },
+  {
+    "match": "cisco ios software",
+    "cve": "CVE-2018-0171",
+    "sev": "CRITICAL",
+    "desc": "Cisco IOS Smart Install RCE — disable with 'no vstack' immediately"
+  },
+  {
+    "match": "cisco ios xe",
+    "cve": "CVE-2023-20198",
+    "sev": "CRITICAL",
+    "desc": "Cisco IOS XE Web UI — actively exploited 0-day privilege escalation (Oct 2023)"
+  },
+  {
+    "match": "cisco ios xr",
+    "cve": "CVE-2022-20821",
+    "sev": "HIGH",
+    "desc": "Cisco IOS XR health check API unauthenticated access"
+  },
+  {
+    "match": "cisco adaptive security",
+    "cve": "CVE-2020-3452",
+    "sev": "HIGH",
+    "desc": "Cisco ASA WebVPN path traversal — unauthenticated file read"
+  },
+  {
+    "match": "cisco asa",
+    "cve": "CVE-2018-0101",
+    "sev": "CRITICAL",
+    "desc": "Cisco ASA WebVPN heap overflow — unauthenticated remote code execution"
+  },
+  {
+    "match": "cisco nx-os",
+    "cve": "CVE-2019-1804",
+    "sev": "CRITICAL",
+    "desc": "Cisco NX-OS default SSH key — unauthenticated root access on affected models"
+  },
+  {
+    "match": "cisco small business",
+    "cve": "CVE-2023-20025",
+    "sev": "CRITICAL",
+    "desc": "Cisco Small Business routers unauthenticated RCE — no patch for EOL models"
+  },
+  {
+    "match": "junos",
+    "cve": "CVE-2023-36844",
+    "sev": "CRITICAL",
+    "desc": "Juniper Junos OS J-Web PHP env-var injection — unauthenticated RCE"
+  },
+  {
+    "match": "fortios",
+    "cve": "CVE-2022-40684",
+    "sev": "CRITICAL",
+    "desc": "FortiOS auth bypass via crafted HTTP — admin takeover, actively exploited"
+  },
+  {
+    "match": "fortigate",
+    "cve": "CVE-2023-27997",
+    "sev": "CRITICAL",
+    "desc": "FortiGate SSL-VPN heap overflow — pre-auth RCE, patch immediately"
+  },
+  {
+    "match": "fortiweb",
+    "cve": "CVE-2021-22123",
+    "sev": "CRITICAL",
+    "desc": "FortiWeb OS command injection via SAML server name"
+  },
+  {
+    "match": "routeros",
+    "cve": "CVE-2018-14847",
+    "sev": "CRITICAL",
+    "desc": "MikroTik RouterOS Winbox credential theft — update to 6.42.1+ or 6.40.8+"
+  },
+  {
+    "match": "mikrotik",
+    "cve": "CVE-2018-14847",
+    "sev": "CRITICAL",
+    "desc": "MikroTik — CVE-2018-14847 credential extraction via Winbox, widely exploited"
+  },
+  {
+    "match": "ubiquiti",
+    "cve": "CVE-2021-22909",
+    "sev": "HIGH",
+    "desc": "Ubiquiti UniFi Network Application SSRF + code execution — verify 6.5.x+"
+  },
+  {
+    "match": "airos",
+    "cve": "CVE-2016-6557",
+    "sev": "CRITICAL",
+    "desc": "Ubiquiti airOS XSS → persistent RCE — exploited by worm in the wild"
+  },
+  {
+    "match": "d-link",
+    "cve": "CVE-2019-16920",
+    "sev": "CRITICAL",
+    "desc": "D-Link multiple models — unauthenticated command execution via ping_ipaddr"
+  },
+  {
+    "match": "tp-link",
+    "cve": "CVE-2023-1389",
+    "sev": "CRITICAL",
+    "desc": "TP-Link Archer AX21 command injection in locale API — Mirai variant delivery, no auth"
+  },
+  {
+    "match": "netgear",
+    "cve": "CVE-2021-45077",
+    "sev": "CRITICAL",
+    "desc": "Netgear multiple models — hardcoded credentials allow unauthenticated access"
+  },
+  {
+    "match": "zyxel",
+    "cve": "CVE-2023-28771",
+    "sev": "CRITICAL",
+    "desc": "Zyxel firewall/VPN OS command injection — pre-auth RCE via IKEv2 packet"
+  },
+  {
+    "match": "zyxel zywall",
+    "cve": "CVE-2022-0342",
+    "sev": "CRITICAL",
+    "desc": "Zyxel ZyWALL authentication bypass — unauthenticated admin access"
+  },
+  {
+    "match": "draytek",
+    "cve": "CVE-2020-8515",
+    "sev": "CRITICAL",
+    "desc": "DrayTek Vigor OS command injection in web management — unauthenticated, actively exploited"
+  },
+  {
+    "match": "vigor",
+    "cve": "CVE-2020-8515",
+    "sev": "CRITICAL",
+    "desc": "DrayTek Vigor router OS command injection via crafted URI"
+  },
+  {
+    "match": "sonicwall sma",
+    "cve": "CVE-2021-20038",
+    "sev": "CRITICAL",
+    "desc": "SonicWall SMA100 stack overflow — pre-auth remote code execution"
+  },
+  {
+    "match": "sonicwall",
+    "cve": "CVE-2021-20016",
+    "sev": "CRITICAL",
+    "desc": "SonicWall SMA SQL injection — unauthenticated credential disclosure, actively exploited"
+  },
+  {
+    "match": "barracuda",
+    "cve": "CVE-2023-2868",
+    "sev": "CRITICAL",
+    "desc": "Barracuda ESG pre-auth command injection in tar extraction — Barracuda advised physical replacement"
+  },
+  {
+    "match": "pulse secure",
+    "cve": "CVE-2019-11510",
+    "sev": "CRITICAL",
+    "desc": "Pulse Secure VPN — unauthenticated arbitrary file read; credentials stolen in the wild"
+  },
+  {
+    "match": "pulse connect",
+    "cve": "CVE-2021-22893",
+    "sev": "CRITICAL",
+    "desc": "Pulse Connect Secure — pre-auth RCE, exploited by nation-state actors"
+  },
+  {
+    "match": "ivanti",
+    "cve": "CVE-2023-46805",
+    "sev": "CRITICAL",
+    "desc": "Ivanti Connect Secure — auth bypass + command injection 0-day, exploited in the wild"
+  },
+  {
+    "match": "citrix netscaler",
+    "cve": "CVE-2019-19781",
+    "sev": "CRITICAL",
+    "desc": "Citrix ADC/NetScaler directory traversal — unauthenticated RCE, weaponised within 24h"
+  },
+  {
+    "match": "citrix adc",
+    "cve": "CVE-2023-3519",
+    "sev": "CRITICAL",
+    "desc": "Citrix ADC/Gateway — unauthenticated RCE (CVE-2023-3519), actively exploited 0-day"
+  },
+  {
+    "match": "citrix gateway",
+    "cve": "CVE-2023-3519",
+    "sev": "CRITICAL",
+    "desc": "Citrix Gateway — unauthenticated RCE; apply CTX-477048 immediately"
+  },
+  {
+    "match": "big-ip",
+    "cve": "CVE-2022-1388",
+    "sev": "CRITICAL",
+    "desc": "F5 BIG-IP iControl REST auth bypass — unauthenticated RCE, weaponised within hours"
+  },
+  {
+    "match": "f5 big-ip",
+    "cve": "CVE-2020-5902",
+    "sev": "CRITICAL",
+    "desc": "F5 BIG-IP TMUI directory traversal — unauthenticated RCE, mass exploitation observed"
+  },
+  {
+    "match": "globalprotect",
+    "cve": "CVE-2024-3400",
+    "sev": "CRITICAL",
+    "desc": "Palo Alto GlobalProtect — unauthenticated RCE via crafted cookies, 0-day exploited"
+  },
+  {
+    "match": "palo alto",
+    "cve": "CVE-2019-1579",
+    "sev": "CRITICAL",
+    "desc": "Palo Alto GlobalProtect SSL-VPN buffer overflow — pre-auth RCE"
+  },
+  {
+    "match": "openvpn",
+    "cve": "CVE-2017-7479",
+    "sev": "HIGH",
+    "desc": "OpenVPN certificate overflow — verify 2.4.3+ or 2.3.17+ patched"
+  },
+  {
+    "match": "openssl",
+    "cve": "CVE-2014-0160",
+    "sev": "CRITICAL",
+    "desc": "OpenSSL Heartbleed — TLS heartbeat memory disclosure; private key exposure possible"
+  },
+  {
+    "match": "docker",
+    "cve": "CVE-2019-5736",
+    "sev": "CRITICAL",
+    "desc": "Docker daemon exposed — CVE-2019-5736 runc escape; full host takeover via API"
+  },
+  {
+    "match": "kubernetes",
+    "cve": "CVE-2018-1002105",
+    "sev": "CRITICAL",
+    "desc": "Kubernetes API exposed — privilege escalation; anonymous access may allow cluster takeover"
+  },
+  {
+    "match": "jenkins",
+    "cve": "CVE-2024-23897",
+    "sev": "CRITICAL",
+    "desc": "Jenkins — CVE-2024-23897 unauthenticated arbitrary file read via CLI (widely exploited 2024)"
+  },
+  {
+    "match": "jenkins ver",
+    "cve": "CVE-2023-27898",
+    "sev": "CRITICAL",
+    "desc": "Jenkins — CSRF to RCE via update center — verify patched"
+  },
+  {
+    "match": "gitlab",
+    "cve": "CVE-2021-22205",
+    "sev": "CRITICAL",
+    "desc": "GitLab CE/EE — CVE-2021-22205 pre-auth RCE via image upload (ExifTool), widely exploited"
+  },
+  {
+    "match": "confluence",
+    "cve": "CVE-2022-26134",
+    "sev": "CRITICAL",
+    "desc": "Atlassian Confluence — CVE-2022-26134 unauthenticated OGNL injection RCE, mass exploitation"
+  },
+  {
+    "match": "atlassian",
+    "cve": "CVE-2023-22515",
+    "sev": "CRITICAL",
+    "desc": "Atlassian Confluence — CVE-2023-22515 broken access; attacker creates admin accounts"
+  },
+  {
+    "match": "jira",
+    "cve": "CVE-2021-26086",
+    "sev": "MEDIUM",
+    "desc": "Atlassian Jira — path traversal allowing unauthenticated WEB-INF file read"
+  },
+  {
+    "match": "bamboo",
+    "cve": "CVE-2022-26133",
+    "sev": "CRITICAL",
+    "desc": "Atlassian Bamboo — RCE via OGNL injection in SharedSecurityModule"
+  },
+  {
+    "match": "bitbucket",
+    "cve": "CVE-2022-36804",
+    "sev": "CRITICAL",
+    "desc": "Atlassian Bitbucket — CVE-2022-36804 command injection via env vars in git hooks"
+  },
+  {
+    "match": "grafana",
+    "cve": "CVE-2021-43798",
+    "sev": "CRITICAL",
+    "desc": "Grafana 8.x directory traversal — unauthenticated arbitrary file read"
+  },
+  {
+    "match": "splunk",
+    "cve": "CVE-2022-43571",
+    "sev": "HIGH",
+    "desc": "Splunk Enterprise — RCE via dashboard PDF generation (authenticated)"
+  },
+  {
+    "match": "goanywhere",
+    "cve": "CVE-2023-0669",
+    "sev": "CRITICAL",
+    "desc": "GoAnywhere MFT — pre-auth RCE, exploited by Cl0p ransomware group"
+  },
+  {
+    "match": "moveit",
+    "cve": "CVE-2023-34362",
+    "sev": "CRITICAL",
+    "desc": "MOVEit Transfer — SQL injection → RCE, Cl0p ransomware mass exploitation (2023)"
+  },
+  {
+    "match": "solarwinds",
+    "cve": "CVE-2020-10148",
+    "sev": "CRITICAL",
+    "desc": "SolarWinds Orion auth bypass — used in SUNBURST supply-chain attack"
+  },
+  {
+    "match": "nagios",
+    "cve": "CVE-2021-37344",
+    "sev": "CRITICAL",
+    "desc": "Nagios XI — multiple RCE vulnerabilities via authenticated SQL injection chain"
+  },
+  {
+    "match": "zabbix",
+    "cve": "CVE-2022-23131",
+    "sev": "CRITICAL",
+    "desc": "Zabbix — SAML SSO auth bypass leading to RCE (CVE-2022-23131)"
+  },
+  {
+    "match": "prtg",
+    "cve": "CVE-2018-9276",
+    "sev": "CRITICAL",
+    "desc": "PRTG Network Monitor — OS command injection in sensor notifications"
+  },
+  {
+    "match": "cacti",
+    "cve": "CVE-2022-46169",
+    "sev": "CRITICAL",
+    "desc": "Cacti — unauthenticated command injection via remote_agent.php, widely exploited"
+  },
+  {
+    "match": "openfire",
+    "cve": "CVE-2023-32315",
+    "sev": "CRITICAL",
+    "desc": "Openfire XMPP — path traversal allows unauthenticated admin account creation"
+  },
+  {
+    "match": "papercut",
+    "cve": "CVE-2023-27350",
+    "sev": "CRITICAL",
+    "desc": "PaperCut NG/MF — unauthenticated RCE via SetupCompleted endpoint, exploited by ransomware"
+  },
+  {
+    "match": "roundcube",
+    "cve": "CVE-2023-43770",
+    "sev": "HIGH",
+    "desc": "Roundcube Webmail — stored XSS leading to credential theft — patch to 1.6.4+"
+  },
+  {
+    "match": "horde",
+    "cve": "CVE-2022-30287",
+    "sev": "HIGH",
+    "desc": "Horde Groupware — file inclusion RCE (authenticated)"
+  },
+  {
+    "match": "veeam",
+    "cve": "CVE-2023-27532",
+    "sev": "CRITICAL",
+    "desc": "Veeam Backup — CVE-2023-27532 unauthenticated RCE via Backup Service, FIN7/BlackBasta delivery"
+  },
+  {
+    "match": "backup exec",
+    "cve": "CVE-2021-27877",
+    "sev": "CRITICAL",
+    "desc": "Veritas Backup Exec — improper auth RCE via BEWS agent — apply patch"
+  },
+  {
+    "match": "vmware vcenter",
+    "cve": "CVE-2021-21985",
+    "sev": "CRITICAL",
+    "desc": "VMware vCenter — RCE via vSAN Health Check plugin, no auth required"
+  },
+  {
+    "match": "vcenter",
+    "cve": "CVE-2021-22005",
+    "sev": "CRITICAL",
+    "desc": "VMware vCenter — arbitrary file upload → RCE (CVE-2021-22005), mass exploitation"
+  },
+  {
+    "match": "vmware",
+    "cve": "CVE-2022-22954",
+    "sev": "CRITICAL",
+    "desc": "VMware Workspace ONE/vIDM — server-side template injection RCE, no auth required"
+  },
+  {
+    "match": "esxi",
+    "cve": "CVE-2021-21974",
+    "sev": "CRITICAL",
+    "desc": "VMware ESXi OpenSLP heap overflow RCE — ESXiArgs ransomware exploiting this in 2023"
+  },
+  {
+    "match": "wordpress",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "WordPress detected — verify all plugins/themes updated; plugins are primary attack surface"
+  },
+  {
+    "match": "wp-login",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "WordPress login exposed — enable 2FA and consider moving to non-standard URL"
+  },
+  {
+    "match": "drupal/7",
+    "cve": "CVE-2018-7600",
+    "sev": "CRITICAL",
+    "desc": "Drupal 7 — CVE-2018-7600 Drupalgeddon 2 unauthenticated RCE, mass exploitation"
+  },
+  {
+    "match": "drupal/8",
+    "cve": "CVE-2019-6340",
+    "sev": "CRITICAL",
+    "desc": "Drupal 8 REST API RCE if REST services enabled — update to 8.6.10+"
+  },
+  {
+    "match": "drupal",
+    "cve": "CVE-2019-6340",
+    "sev": "HIGH",
+    "desc": "Drupal detected — verify Drupalgeddon 2/3 patches applied and REST services restricted"
+  },
+  {
+    "match": "joomla",
+    "cve": "CVE-2023-23752",
+    "sev": "HIGH",
+    "desc": "Joomla — CVE-2023-23752 unauthenticated DB credential disclosure"
+  },
+  {
+    "match": "phpmyadmin",
+    "cve": "CVE-2019-12922",
+    "sev": "HIGH",
+    "desc": "phpMyAdmin exposed — CSRF attacks possible; restrict access to trusted IPs only"
+  },
+  {
+    "match": "magento",
+    "cve": "CVE-2022-24086",
+    "sev": "CRITICAL",
+    "desc": "Adobe Commerce/Magento 2 — pre-auth RCE via template injection in checkout, actively exploited"
+  },
+  {
+    "match": "opencart",
+    "cve": "CVE-2021-3007",
+    "sev": "HIGH",
+    "desc": "OpenCart deserialization RCE — update to current version"
+  },
+  {
+    "match": "idrac",
+    "cve": "CVE-2021-21514",
+    "sev": "HIGH",
+    "desc": "Dell iDRAC — SSRF and privilege escalation (CVE-2021-21514) — update iDRAC firmware"
+  },
+  {
+    "match": "hp integrated lights-out",
+    "cve": "CVE-2017-12542",
+    "sev": "CRITICAL",
+    "desc": "HP iLO 4 authentication bypass — add X-Auth-Token header to bypass auth entirely"
+  },
+  {
+    "match": "ilo",
+    "cve": "CVE-2017-12542",
+    "sev": "CRITICAL",
+    "desc": "HP iLO 4 auth bypass (CVE-2017-12542) — unauthenticated admin access — patch iLO firmware"
+  },
+  {
+    "match": "ipmi",
+    "cve": "CVE-2013-4782",
+    "sev": "CRITICAL",
+    "desc": "IPMI 2.0 cipher suite 0 auth bypass; default ADMIN/ADMIN credentials extremely common"
+  },
+  {
+    "match": "amt",
+    "cve": "CVE-2017-5689",
+    "sev": "CRITICAL",
+    "desc": "Intel AMT — INTEL-SA-00075 authentication bypass, unauthenticated OOB management access"
+  },
+  {
+    "match": "aten",
+    "cve": "CVE-2021-33544",
+    "sev": "CRITICAL",
+    "desc": "ATEN KVM — multiple auth bypass and command injection vulnerabilities"
+  },
+  {
+    "match": "dsm 6.",
+    "cve": "CVE-2021-29086",
+    "sev": "CRITICAL",
+    "desc": "Synology DSM 6.x — multiple critical vulnerabilities; upgrade to DSM 7.x immediately"
+  },
+  {
+    "match": "dsm 7.0",
+    "cve": "CVE-2022-22685",
+    "sev": "HIGH",
+    "desc": "Synology DSM 7.0 WebDAV path traversal — update to 7.0.1-42218-2+"
+  },
+  {
+    "match": "synology",
+    "cve": "CVE-2023-47802",
+    "sev": "HIGH",
+    "desc": "Synology — targeted by Deadbolt/eCh0raix ransomware; verify DSM fully patched"
+  },
+  {
+    "match": "qts 4.",
+    "cve": "CVE-2022-27596",
+    "sev": "CRITICAL",
+    "desc": "QNAP QTS 4.x SQL injection → RCE — update immediately or take offline"
+  },
+  {
+    "match": "qts 5.",
+    "cve": "CVE-2022-27596",
+    "sev": "HIGH",
+    "desc": "QNAP QTS 5.x — verify patched; Deadbolt ransomware actively targeting QNAP"
+  },
+  {
+    "match": "qnap",
+    "cve": "CVE-2023-23352",
+    "sev": "HIGH",
+    "desc": "QNAP — disable UPnP/internet exposure; multiple ransomware groups actively targeting"
+  },
+  {
+    "match": "wd mycloud",
+    "cve": "CVE-2021-35941",
+    "sev": "CRITICAL",
+    "desc": "WD My Cloud — unauthenticated factory reset via crafted request; update WD OS 5"
+  },
+  {
+    "match": "hikvision",
+    "cve": "CVE-2021-36260",
+    "sev": "CRITICAL",
+    "desc": "Hikvision IP camera — CVE-2021-36260 unauthenticated RCE via HTTP, mass exploitation observed"
+  },
+  {
+    "match": "dahua",
+    "cve": "CVE-2021-33044",
+    "sev": "CRITICAL",
+    "desc": "Dahua IP camera — CVE-2021-33044 authentication bypass + remote command execution"
+  },
+  {
+    "match": "foscam",
+    "cve": "CVE-2017-2849",
+    "sev": "HIGH",
+    "desc": "Foscam IP camera — multiple auth bypass and command injection vulnerabilities"
+  },
+  {
+    "match": "netwave",
+    "cve": "CVE-2019-11842",
+    "sev": "CRITICAL",
+    "desc": "Netwave IP camera — hardcoded credentials, unauthenticated RTSP stream access"
+  },
+  {
+    "match": "jetdirect",
+    "cve": "CVE-2017-2750",
+    "sev": "HIGH",
+    "desc": "HP JetDirect printer — CVE-2017-2750 solution file RCE; restrict to trusted VLANs"
+  },
+  {
+    "match": "hp laserjet",
+    "cve": "CVE-2021-39237",
+    "sev": "CRITICAL",
+    "desc": "HP LaserJet — CVE-2021-39237 RCE via LLMNR/mDNS; apply HP FutureSmart update"
+  },
+  {
+    "match": "lexmark",
+    "cve": "CVE-2023-26067",
+    "sev": "CRITICAL",
+    "desc": "Lexmark printer — CVE-2023-26067 post-auth RCE via SSRF chain — update firmware"
+  },
+  {
+    "match": "xerox",
+    "cve": "CVE-2021-28087",
+    "sev": "HIGH",
+    "desc": "Xerox AltaLink — heap overflow in PDF processing — verify firmware patched"
+  },
+  {
+    "match": "konica minolta",
+    "cve": "CVE-2020-5551",
+    "sev": "HIGH",
+    "desc": "Konica Minolta — authentication bypass in web management — verify patched"
+  },
+  {
+    "match": "modbus",
+    "cve": "INFO",
+    "sev": "CRITICAL",
+    "desc": "Modbus TCP exposed — no authentication or encryption by design; isolate from all IT networks"
+  },
+  {
+    "match": "siemens",
+    "cve": "CVE-2019-13945",
+    "sev": "HIGH",
+    "desc": "Siemens SCALANCE — hardcoded SSH credentials allow admin access"
+  },
+  {
+    "match": "simatic",
+    "cve": "CVE-2019-10929",
+    "sev": "HIGH",
+    "desc": "Siemens SIMATIC S7 — CSRF + info disclosure; segment from IT network strictly"
+  },
+  {
+    "match": "s7comm",
+    "cve": "CVE-2019-13945",
+    "sev": "CRITICAL",
+    "desc": "Siemens S7comm protocol — Stuxnet targeted this; PLC must be isolated from all IT"
+  },
+  {
+    "match": "scada",
+    "cve": "INFO",
+    "sev": "CRITICAL",
+    "desc": "SCADA/ICS banner — should NEVER be network-accessible from IT or internet"
+  },
+  {
+    "match": "directlogic",
+    "cve": "CVE-2022-2942",
+    "sev": "CRITICAL",
+    "desc": "AutomationDirect DirectLogic PLC — stack-based buffer overflow via crafted packet"
+  },
+  {
+    "match": "schneider",
+    "cve": "CVE-2022-0222",
+    "sev": "HIGH",
+    "desc": "Schneider Electric — verify firmware patched; multiple critical ICS CVEs documented"
+  },
+  {
+    "match": "codesys",
+    "cve": "CVE-2021-30189",
+    "sev": "CRITICAL",
+    "desc": "CODESYS PLC runtime — heap buffer overflow RCE; widely used in industrial automation"
+  },
+  {
+    "match": "profinet",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "PROFINET industrial protocol detected — should not be accessible from IT or internet"
+  },
+  {
+    "match": "snmp",
+    "cve": "CVE-2017-6736",
+    "sev": "HIGH",
+    "desc": "SNMP v1/v2c — cleartext community strings; CVE-2017-6736 Cisco IOS RCE via SNMP"
+  },
+  {
+    "match": "mqtt",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "MQTT broker exposed — verify anonymous access disabled and TLS on port 8883"
+  },
+  {
+    "match": "mosquitto",
+    "cve": "CVE-2021-28166",
+    "sev": "HIGH",
+    "desc": "Eclipse Mosquitto — CVE-2021-28166 DoS via crafted CONNECT in MQTT v5 protocol"
+  },
+  {
+    "match": "amqp",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "AMQP (RabbitMQ/QPID) — verify auth enabled; RabbitMQ default is guest:guest"
+  },
+  {
+    "match": "rabbitmq",
+    "cve": "CVE-2023-46118",
+    "sev": "HIGH",
+    "desc": "RabbitMQ — CVE-2023-46118 HTTP API DoS via large HTTP body — patch to 3.12.6+"
+  },
+  {
+    "match": "nfs",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "NFS service detected — verify exports restricted by IP and root_squash enabled"
+  },
+  {
+    "match": "tftp",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "TFTP exposed — no authentication or encryption; can read/write files if misconfigured"
+  },
+  {
+    "match": "chargen",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "Chargen (port 19) — used in UDP amplification DDoS attacks; disable immediately"
+  },
+  {
+    "match": "finger",
+    "cve": "CVE-1999-0197",
+    "sev": "HIGH",
+    "desc": "Finger daemon — exposes usernames and session info; EOL 1970s protocol, disable"
+  },
+  {
+    "match": "x11",
+    "cve": "INFO",
+    "sev": "CRITICAL",
+    "desc": "X11 display server exposed — unauthenticated access allows screenshot and keylogging"
+  },
+  {
+    "match": "xrdp",
+    "cve": "CVE-2023-40184",
+    "sev": "HIGH",
+    "desc": "xRDP buffer overflow in xrdp_mm_chan_data_in — patch to 0.9.24+"
+  },
+  {
+    "match": "vnc: protocol version",
+    "cve": "INFO",
+    "sev": "HIGH",
+    "desc": "VNC service responding — verify auth mode is not None or VNC Password (weak)"
+  },
+  {
+    "match": "prometheus",
+    "cve": "INFO",
+    "sev": "MEDIUM",
+    "desc": "Prometheus metrics endpoint exposed — may leak sensitive system and application data"
+  },
+  {
+    "match": "sslv2",
+    "cve": "CVE-2016-0800",
+    "sev": "CRITICAL",
+    "desc": "SSLv2 enabled — DROWN attack (CVE-2016-0800); all SSLv2 servers must be disabled now"
+  },
+  {
+    "match": "sslv3",
+    "cve": "CVE-2014-3566",
+    "sev": "HIGH",
+    "desc": "SSLv3 enabled — POODLE attack possible; disable SSLv3 on all services immediately"
+  },
+  {
+    "match": "heartbeat",
+    "cve": "CVE-2014-0160",
+    "sev": "CRITICAL",
+    "desc": "OpenSSL Heartbleed — TLS heartbeat memory disclosure, private key and session data at risk"
+  }
 ]
