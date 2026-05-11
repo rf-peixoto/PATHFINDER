@@ -10,49 +10,57 @@
   Navigate. Map. Identify. Secure your grid.
 ```
 
-PATHFINDER is a Python-based network scanning tool designed to help you inventory every device on your local network, identify unknown or rogue nodes, fingerprint operating systems, grab service banners, and receive CVE-based vulnerability hints — all from a single terminal command with a cyberpunk-styled interface.
+PATHFINDER is a Python-based network scanner designed to inventory every device on your local network, identify unknown or rogue nodes, fingerprint operating systems, grab service banners, and flag CVE-matched vulnerabilities — all from a single terminal command with a cyberpunk-styled interface.
 
 ---
 
 ## Features
 
-- **Ping sweep + ARP resolution** — discovers all live hosts on the segment, with MAC address identification from both the ARP cache and direct ARP queries
-- **OS fingerprinting** — infers the operating system from ICMP TTL values (Linux/macOS → 64, Windows → 128, Cisco/BSD → 255)
-- **Banner grabbing** — connects to open ports and reads service greetings to identify software and versions
-- **CVE hint engine** — matches banners against a local CVE rules file and flags known-vulnerable software with severity levels
-- **mDNS / Bonjour interception** — passively listens on the multicast group to capture device names that DNS misses entirely
-- **MAC vendor lookup** — resolves the OUI prefix against a local vendor database to identify manufacturers
-- **Port scanning** — checks 24 common ports including high-risk ones (Telnet, SMB, RDP, VNC, Docker, Redis, MongoDB, and more)
-- **ARP spoof detection** — flags duplicate MACs across multiple IPs and alerts when the gateway's hardware address changes between scans
-- **Promiscuous mode check** — inspects local NIC flags for `IFF_PROMISC`, which may indicate a packet sniffer running on your machine
-- **Device whitelist** — learn your network once, then flag anything that appears uncharted in future scans
-- **MAC change tracking** — detects when a known IP starts responding with a different MAC address
-- **Beacon mode** — continuous re-scanning at a configurable interval with per-cycle diff output (new nodes, lost nodes, changed MACs)
-- **JSON export** — saves full scan results automatically after every run
-- **External data files** — OUI vendor database and CVE hint rules are loaded from JSON files, keeping the script lean and easy to update
+- **Ping sweep + ARP resolution** — discovers all live hosts; resolves MAC addresses via `/proc/net/arp` (root), `ip neigh show` (no-root / Android), or `arp -a` (macOS/Windows)
+- **Privilege-aware ARP** — detects whether running as root at startup and selects the best MAC resolution method automatically; shows `ROOT` or `UNPRIVILEGED` in the header on every scan
+- **MAC randomisation detection** — identifies locally-administered (privacy) MACs from Android 10+, iOS 14+, and Windows 10+ and labels them `⚄ Randomised MAC` rather than silently showing "Unknown"
+- **OUI vendor lookup** — resolves the first 3 bytes of each MAC against a local JSON database; the full IEEE registry (~38,852 entries) can be built with `update_oui_db.py`
+- **OS fingerprinting** — infers operating system from ICMP TTL values (Linux/macOS/Android ≤ 64, Windows ≤ 128, Cisco/BSD ≤ 255)
+- **Banner grabbing** — connects to open ports and reads service greetings with correct `\r\n` handling so banners never corrupt the terminal display
+- **CVE hint engine** — matches banners against a local JSON rules file; 339 rules covering FTP, SSH, web servers, databases, network gear, VPN gateways, industrial protocols, NAS, cameras, and more
+- **mDNS / Bonjour interception** — passively listens on 224.0.0.251:5353 to capture device hostnames that reverse DNS misses
+- **Port scanning** — checks 28 common ports including all high-risk services
+- **ARP spoof detection** — flags duplicate MACs across multiple IPs and alerts when the gateway hardware address changes between scans
+- **Promiscuous mode check** — inspects local NIC flags for `IFF_PROMISC`, which may indicate a sniffer running on the scanning machine
+- **Device whitelist** — learn your network once, then flag anything uncharted in future scans; devices with unresolvable MACs are always UNCHARTED by design
+- **MAC change tracking** — beacon mode detects when a known IP starts responding with a different MAC
+- **Beacon mode** — continuous re-scanning at a configurable interval with per-cycle diff (new nodes, lost nodes, changed MACs)
+- **JSON export** — saves full scan results after every run, including the privilege level that produced the scan
+- **External data files** — OUI database and CVE rules are loaded from JSON files; update either without touching the script
 
 ---
 
 ## Requirements
 
 - Python 3.6 or newer
-- Linux, macOS, or Windows
-- `sudo` / administrator privileges recommended (required for ARP cache reads and mDNS multicast on some systems)
-- No third-party Python packages — standard library only
+- For no-root MAC resolution on Android / Linux: `ip` from `iproute2`
+
+```bash
+# Termux
+pkg install iproute2 iputils
+
+# Debian / Ubuntu
+sudo apt install iproute2 iputils-ping
+```
 
 ---
 
 ## File Layout
 
-Place all four files in the same directory:
+Place these files in the same directory:
 
 ```
-pathfinder.py           ← main script
-oui_db.json             ← MAC vendor database
-cve_db.json             ← CVE hint rules
+pathfinder.py               ← main scanner
+oui_db.json                 ← MAC vendor database (~38,852 IEEE entries)
+cve_db.json                 ← CVE hint rules (339 entries)
 ```
 
-The following files are created automatically on first run:
+Created automatically on first run:
 
 ```
 pathfinder_results.json     ← scan output (overwritten each run)
@@ -61,46 +69,80 @@ pathfinder_whitelist.json   ← node registry (created with --learn)
 
 ---
 
-## Data Files
+## Quick Start
 
-PATHFINDER reads vendor and CVE data from local JSON files rather than hardcoding them, so you can update either database without touching the script.
+```bash
+# Step 1 — learn your network and save the registry
+sudo python3 pathfinder.py --learn
+
+# Step 2 — regular scans that flag anything new or unknown
+sudo python3 pathfinder.py --whitelist
+```
+
+---
+
+## Data Files
 
 ### `oui_db.json`
 
-A JSON object mapping 3-byte OUI prefixes (uppercase, colon-separated) to vendor name strings.
+A JSON object mapping 3-byte OUI prefixes (uppercase XX:XX:XX) to vendor description strings. The enriched version includes device family, OS/firmware context, and security notes.
 
 ```json
 {
-  "B8:27:EB": "Raspberry Pi",
-  "DC:A6:32": "Raspberry Pi",
-  "00:0C:29": "VMware",
-  "50:C7:BF": "TP-Link",
-  "AC:BC:32": "Apple"
+  "B8:27:EB": "Raspberry Pi Foundation | RPi 3B/3B+/Zero W | Linux Raspberry Pi OS ...",
+  "00:0C:29": "VMware | Virtual machine NIC (Workstation / ESXi) | Any guest OS ...",
+  "50:C7:BF": "TP-Link | Archer / Deco / TL-series router or AP | TP-Link firmware ..."
 }
 ```
 
 ### `cve_db.json`
 
-A JSON array of hint rules. Each rule specifies a case-insensitive substring to match against a service banner, the associated CVE identifier, a severity level, and a description.
+A JSON array of CVE hint rules. Each rule is matched case-insensitively as a substring of a service banner.
 
 ```json
 [
   {
-    "match": "vsftpd 2.3.4",
-    "cve":   "CVE-2011-2523",
-    "sev":   "CRITICAL",
-    "desc":  "vsftpd 2.3.4 backdoor — shell spawns on port 6200"
-  },
-  {
     "match": "apache/2.4.49",
     "cve":   "CVE-2021-41773",
     "sev":   "CRITICAL",
-    "desc":  "Apache 2.4.49 path traversal & unauthenticated RCE"
+    "desc":  "Apache 2.4.49 path traversal + RCE via mod_cgi — unauthenticated, weaponised immediately"
   }
 ]
 ```
 
-Valid severity values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`
+Valid severity values: `CRITICAL` · `HIGH` · `MEDIUM` · `LOW` · `INFO`
+
+**CVE database coverage (339 rules):**
+
+| Category | Rules | Examples |
+|---|---|---|
+| FTP servers | 17 | vsftpd 2.3.4 backdoor, ProFTPD mod_copy, wu-ftpd |
+| SSH | 48 | OpenSSH 2.x → 9.3p2, Dropbear, libssh auth bypass (CVE-2018-10933) |
+| Telnet / legacy | 6 | Always CRITICAL; telnetd CVE-2011-4862 RCE |
+| Apache httpd | 27 | Every patched CVE from 1.3 through 2.4.55 |
+| nginx | 12 | 0.x EOL through 1.20.x mp4 module UAF |
+| IIS | 5 | IIS 5.x → 10.x including CVE-2022-21907 |
+| Embedded web servers | 7 | GoAhead, Boa, mini_httpd (router/IoT targets) |
+| PHP | 14 | EOL from PHP 4.x through 8.0.x |
+| Application servers | 15 | Tomcat Ghostcat, JBoss deserialization, WebLogic RCE |
+| Log4j / Spring / CGI | 5 | Log4Shell, Spring4Shell, Shellshock |
+| SMTP / mail servers | 21 | Exim 4.87–4.96 (21Nails), Exchange ProxyLogon/Shell, Zimbra |
+| IMAP / POP3 | 5 | Dovecot CVE-2019-11500, Cyrus, UW-IMAP |
+| Databases | 26 | MySQL/MariaDB EOL, Redis Lua RCE, MongoDB, InfluxDB auth bypass, MinIO credential leak, etcd |
+| Windows / SMB | 11 | EternalBlue MS17-010, BlueKeep CVE-2019-0708, SMBGhost, SambaCry |
+| VNC | 8 | RFB 3.3 auth bypass, TigerVNC, UltraVNC, TightVNC |
+| Network gear | 28 | Cisco IOS/ASA/IOS-XE 0-day, Juniper Junos RCE, Fortinet auth bypass, MikroTik Winbox, TP-Link Mirai, Zyxel, DrayTek, SonicWall, Barracuda |
+| VPN gateways | 11 | Pulse/Ivanti, Citrix ADC CVE-2023-3519, F5 BIG-IP, Palo Alto GlobalProtect 0-day |
+| DevOps / CI/CD | 24 | Jenkins CVE-2024-23897, GitLab, Confluence, Grafana, GoAnywhere, MOVEit, SolarWinds, Zabbix, PaperCut, Veeam |
+| VMware | 4 | vCenter RCE, ESXi ESXiArgs ransomware vector |
+| CMS / e-commerce | 9 | Drupal Drupalgeddon 2/3, Joomla, Magento pre-auth RCE |
+| Remote management | 5 | iDRAC, HP iLO 4 auth bypass, IPMI cipher-0, Intel AMT |
+| NAS storage | 7 | Synology DSM 6/7, QNAP Deadbolt target, WD My Cloud |
+| IP cameras | 4 | Hikvision CVE-2021-36260, Dahua CVE-2021-33044 |
+| Printers | 5 | HP JetDirect, HP LaserJet, Lexmark, Xerox |
+| Industrial / OT | 9 | Modbus, Siemens S7/SIMATIC, CODESYS, PROFINET |
+| Misc protocols | 12 | SNMP v1/v2c, MQTT, NFS, TFTP, X11, xRDP |
+| SSL / TLS | 3 | Heartbleed, POODLE, DROWN |
 
 ---
 
@@ -109,30 +151,36 @@ Valid severity values: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`
 ### Basic scan — auto-detects your network
 
 ```bash
+python3 pathfinder.py
+```
+
+### Full scan with root-level ARP access
+
+```bash
 sudo python3 pathfinder.py
 ```
 
 ### Scan a specific range
 
 ```bash
-sudo python3 pathfinder.py -r 10.0.0.0/24
+python3 pathfinder.py -r 10.0.0.0/24
 ```
 
-### Build your node registry (first-time setup)
+### Build your node registry
 
 ```bash
 sudo python3 pathfinder.py --learn
 ```
 
-Scans the network and saves every discovered device to `pathfinder_whitelist.json`. Run this once on a known-good network state.
+Scans and saves every discovered device to `pathfinder_whitelist.json`. Devices whose MACs cannot be resolved are not saved — identity cannot be confirmed without a hardware address.
 
-### Flag unknown devices against the registry
+### Flag unknown devices
 
 ```bash
 sudo python3 pathfinder.py --whitelist
 ```
 
-Any device not in the registry is tagged **UNCHARTED** in the output and listed in the threat matrix.
+Any device not in the registry is tagged `[⚠ UNCHARTED]`. Devices with randomised MACs will always appear as UNCHARTED by design.
 
 ### Beacon mode — continuous monitoring
 
@@ -140,36 +188,30 @@ Any device not in the registry is tagged **UNCHARTED** in the output and listed 
 sudo python3 pathfinder.py --beacon --interval 120
 ```
 
-Re-scans every 120 seconds. Each cycle shows a diff: new nodes are tagged **INBOUND**, disappeared nodes are listed under **SIGNAL LOST**, and MAC changes trigger an **ID SPOOFED** alert.
+Re-scans every 120 seconds. Each cycle diffs against the previous: new nodes get `[▶ NEW]`, disappeared nodes appear under **SIGNAL LOST**, MAC changes trigger `[⚠ MAC!]` and appear in **MAC CHANGES** in the threat matrix.
 
 ### Quiet mode — fast ping and ARP only
 
 ```bash
-sudo python3 pathfinder.py -q
+python3 pathfinder.py -q
 ```
 
-Reduces thread count to 20, skips port scanning and banner grabbing. Useful for a quick headcount with minimal noise.
+20 threads, skips port scanning and banner grabbing. Fast headcount with minimal noise.
 
 ### Skip individual modules
 
 ```bash
-sudo python3 pathfinder.py --no-ports        # ping sweep only
-sudo python3 pathfinder.py --no-banner       # ports but no banners or mDNS
-sudo python3 pathfinder.py --no-os           # skip TTL fingerprinting
-sudo python3 pathfinder.py --no-banner --no-os  # fastest full port sweep
+python3 pathfinder.py --no-ports
+python3 pathfinder.py --no-banner
+python3 pathfinder.py --no-os
+python3 pathfinder.py --no-banner --no-os
 ```
 
-### Custom data file paths
+### Android / Termux (no root)
 
 ```bash
-sudo python3 pathfinder.py --oui /path/to/oui_db.json
-sudo python3 pathfinder.py --cve /path/to/cve_db.json
-```
-
-### Export to a specific file
-
-```bash
-sudo python3 pathfinder.py -e /tmp/my_scan.json
+pkg install iproute2 iputils python
+python pathfinder.py -r 192.168.1.0/24 --no-os
 ```
 
 ---
@@ -186,11 +228,11 @@ sudo python3 pathfinder.py -e /tmp/my_scan.json
 | `-q`, `--quiet` | off | 20 threads, ping + ARP only |
 | `--no-ports` | off | Skip port scanning |
 | `--no-banner` | off | Skip banner grabbing and mDNS |
-| `--no-os` | off | Skip OS fingerprinting |
+| `--no-os` | off | Skip TTL OS fingerprinting |
 | `--learn` | off | Save discovered nodes to registry |
-| `--whitelist` | off | Flag nodes not in registry |
+| `--whitelist` | off | Flag nodes not in the registry |
 | `--whitelist-file` | `pathfinder_whitelist.json` | Registry file path |
-| `--mdns-time` | `5` | mDNS interception duration (seconds) |
+| `--mdns-time` | `5` | mDNS listen duration (seconds) |
 | `--oui` | `oui_db.json` | OUI vendor DB path |
 | `--cve` | `cve_db.json` | CVE hints DB path |
 
@@ -198,75 +240,117 @@ sudo python3 pathfinder.py -e /tmp/my_scan.json
 
 ## Understanding the Output
 
-### Node cards
-
-Each discovered device is shown as a card:
+### Privilege indicator
 
 ```
-  ╭─ 04  192.168.1.105       [⚠ UNCHARTED]
-  │  MAC      DC:A6:32:xx:xx:xx   ·  Vendor  Raspberry Pi
-  │  Hostname raspberrypi.local
+Priv: ROOT           ← /proc/net/arp + arp -n available
+Priv: UNPRIVILEGED   ← ip neigh show used instead
+```
+
+### Node card
+
+```
+  ╭─ 03  192.168.1.105       [⚠ UNCHARTED]
+  │  MAC      B8:27:EB:xx:xx:xx  ·  Vendor  Raspberry Pi Foundation | RPi 4B ...
+  │  Host     raspberrypi.local
   │  OS       Linux / macOS / Android          TTL 64
-  │  Type     🤖 SBC / IoT
+  │  Type     [SBC / IoT]
   │  Ports    22/SSH  80/HTTP
-  │  Signal   :22  SSH-2.0-OpenSSH_8.9p1 Debian
-  │  Pinged   14:32:07
+  │  Banner   :22  SSH-2.0-OpenSSH_8.9p1 Debian
+  │  ⚡ CVE-2021-41617   HIGH      OpenSSH privilege escalation via supplemental groups
+  │  Pinged   13:57:44
   ╰──────────────────────────────────────────────────────────────────
 ```
 
-### Threat matrix
+### Node tags
 
-After the node list, PATHFINDER prints a consolidated threat matrix covering:
+| Tag | Meaning |
+|---|---|
+| `[GATEWAY]` | Detected default route (by IP or hostname) |
+| `[HOME]` | The machine running the scan |
+| `[HOSTILE?]` | Unknown vendor AND no hostname resolved |
+| `[▶ NEW]` | Appeared since the last beacon cycle |
+| `[⚠ MAC!]` | MAC address changed since last beacon cycle |
+| `[⚠ UNCHARTED]` | Not in the node registry (`--whitelist` active) |
 
-- **Unidentified nodes** — unknown vendor and no hostname (tagged `HOSTILE?`)
-- **Hostile ports** — high-risk services open: Telnet, SMB, RDP, VNC, Docker, Memcached, MongoDB, Elasticsearch
-- **Exploit vectors** — CVE matches from banner grabbing, with severity and description
-- **Signal spoofing alerts** — duplicate MACs or gateway MAC changes (ARP poisoning indicators)
-- **Uncharted nodes** — devices not in your whitelist
-- **Inbound / lost** — beacon mode new and disappeared nodes
-- **ID changes** — MAC address changes per IP (beacon mode)
+### MAC vendor field
+
+| Display | Meaning |
+|---|---|
+| Vendor name / description | OUI matched in the database |
+| `OUI not in database — run update_oui_db.py` | Real OUI not yet in local DB |
+| `⚄ Randomised MAC (privacy/Android/iOS)` | Locally-administered MAC — cannot be resolved by any OUI database |
+| `Unknown` | MAC could not be resolved |
+
+### Threat matrix sections
+
+| Section | Trigger |
+|---|---|
+| UNIDENTIFIED / HOSTILE NODES | Unknown vendor + no hostname |
+| HOSTILE PORTS DETECTED | High-risk port open (Telnet, SMB, RDP, VNC, Docker, Memcached, MongoDB, Elasticsearch) |
+| EXPLOIT VECTORS | CVE rule matched in a banner |
+| SIGNAL SPOOFING ALERTS | Duplicate MACs or gateway MAC change |
+| UNCHARTED NODES | Not in registry (with `--whitelist`) |
+| SIGNAL LOST | Devices that disappeared since last beacon cycle |
+| MAC CHANGES | Hardware address change per IP (beacon mode) |
 
 ### Severity levels
 
 | Level | Colour | Meaning |
 |---|---|---|
-| `CRITICAL` | Red | Exploit available, likely unpatched, immediate action required |
-| `HIGH` | Orange | Serious risk, remediate soon |
-| `MEDIUM` | Amber | Notable finding, review when possible |
-| `LOW` | Green | Informational, low immediate risk |
-| `INFO` | Teal | General note, no direct CVE |
+| `CRITICAL` | Red | Unauthenticated RCE, auth bypass, or actively exploited |
+| `HIGH` | Orange | Authenticated RCE, critical disclosure, or EOL with known exploits |
+| `MEDIUM` | Amber | DoS, info disclosure, or EOL without active public exploitation |
+| `LOW` | Green | Minor issue or hardening recommendation |
+| `INFO` | Teal | Exposure worth reviewing; no direct CVE |
+
+---
+
+## MAC Resolution — Root vs No-Root
+
+PATHFINDER runs `os.geteuid() == 0` once at startup. ARP functions use the result throughout:
+
+| Step | Method | When |
+|---|---|---|
+| 1 | `/proc/net/arp` — direct kernel table read | Root + Linux only |
+| 2 | `ip neigh show` — iproute2 neighbour table | **No root needed** (Android, Termux, Linux) |
+| 3 | `arp -a` — system ARP command | macOS, Windows, fallback |
+
+All three methods normalise the result to uppercase `XX:XX:XX:XX:XX:XX` before storage and comparison.
+
+**Why some MACs always show `OUI not in database`:**
+Run `update_oui_db.py` to pull the complete IEEE registry. The shipped `oui_db.json` may not cover every manufacturer — newer or smaller OUI allocations are missing until the database is refreshed.
+
+**Why some MACs always show `Randomised MAC`:**
+Bit 1 of the first octet is set (values like `x2`, `x6`, `xA`, `xE`). This is the IEEE locally-administered bit — the device generated this MAC randomly for Wi-Fi privacy. No database can resolve it. These nodes can never be whitelisted by MAC.
 
 ---
 
 ## Recommended Workflow
 
-**First run on a new network:**
-
+**First time setup:**
 ```bash
-sudo python3 pathfinder.py --learn
+sudo python3 pathfinder.py --learn  # scan and save known-good baseline
 ```
 
 **Daily / scheduled check:**
-
 ```bash
 sudo python3 pathfinder.py --whitelist
 ```
 
-**Set-and-forget monitoring:**
-
+**Ongoing monitoring:**
 ```bash
 sudo python3 pathfinder.py --beacon --whitelist --interval 300
 ```
 
-**Quick check before/after a change:**
-
+**Quick headcount:**
 ```bash
-sudo python3 pathfinder.py -q
+python3 pathfinder.py -q
 ```
 
 ---
 
-## Ports Scanned
+## Ports Scanned (28 total)
 
 | Port | Service | High-risk |
 |---|---|---|
@@ -287,6 +371,7 @@ sudo python3 pathfinder.py -q
 | 636 | LDAPS | |
 | 1883 | MQTT | |
 | 2375 | Docker | ⚠ |
+| 2376 | Docker-TLS | |
 | 3306 | MySQL | |
 | 3389 | RDP | ⚠ |
 | 5432 | PostgreSQL | |
@@ -302,15 +387,16 @@ sudo python3 pathfinder.py -q
 
 ## Notes
 
-- **Authorization** — only scan networks you own or have explicit written permission to test. Unauthorized network scanning may be illegal in your jurisdiction.
-- **mDNS** — binding to port 5353 may require root on some systems. If it fails, PATHFINDER falls back gracefully and skips mDNS without affecting other features.
-- **Promiscuous mode detection** — the local interface check only inspects the machine running PATHFINDER. Remote promiscuous detection requires raw packet injection, which is outside the scope of this tool.
-- **ARP spoof detection** — a gateway MAC change between scans is a strong indicator but not conclusive proof of an attack. Changes can also occur after a legitimate router replacement or firmware update.
-- **Banner grabbing** — some services close the connection before sending a banner, or require specific protocol handshakes. PATHFINDER sends basic probes; a dedicated scanner like `nmap -sV` provides deeper identification.
-- **CVE matching** — hints are based on banner string matching and are not a substitute for a proper vulnerability scanner. Treat matches as leads to investigate, not confirmed vulnerabilities.
+- **Authorization** — only scan networks you own or have explicit written permission to test.
+- **mDNS** — binding to port 5353 may require root on some systems; PATHFINDER skips it gracefully if it fails.
+- **Promiscuous mode detection** — only inspects the local machine. Remote promisc detection requires raw packet injection and is outside the scope of this tool.
+- **ARP spoof detection** — a gateway MAC change between scans is a strong indicator but not conclusive. Legitimate causes include router replacement or firmware upgrade.
+- **Banner grabbing** — some services close before sending a banner or require a specific protocol handshake. PATHFINDER sends basic probes; `nmap -sV` provides deeper identification where needed.
+- **CVE matching** — rules are banner substring matches, not a substitute for a proper vulnerability scanner. Treat matches as leads to investigate, not confirmed exploits.
+- **OUI database** — even with the full IEEE MA-L registry, some MACs will not resolve. MA-M and MA-S allocations are separate IEEE registries not included in the standard download. Randomised MACs will never resolve regardless of database size.
 
 ---
 
 ## License
 
-For personal and authorized professional use. See your jurisdiction's laws regarding network scanning before deploying on any network you do not own.
+For personal and authorised professional use. Comply with your jurisdiction's laws regarding network scanning before deploying on any network you do not own.
