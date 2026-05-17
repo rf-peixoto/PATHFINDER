@@ -19,7 +19,7 @@ PATHFINDER is a Python-based network scanner designed to inventory every device 
 - **Ping sweep + ARP resolution** — discovers all live hosts; resolves MAC addresses via `/proc/net/arp` (root), `ip neigh show` (no-root / Android), or `arp -a` (macOS/Windows)
 - **Privilege-aware ARP** — detects whether running as root at startup and selects the best MAC resolution method automatically; shows `ROOT` or `UNPRIVILEGED` in the header on every scan
 - **MAC randomisation detection** — identifies locally-administered (privacy) MACs from Android 10+, iOS 14+, and Windows 10+ and labels them `⚄ Randomised MAC` rather than silently showing "Unknown"
-- **OUI vendor lookup** — resolves the first 3 bytes of each MAC against a local JSON database; the full IEEE registry (~38,852 entries) can be built with `update_oui_db.py`
+- **OUI vendor lookup** — resolves the first 3 bytes of each MAC against a local JSON database; the full IEEE registry (~38,852 entries).
 - **OS fingerprinting** — infers operating system from ICMP TTL values (Linux/macOS/Android ≤ 64, Windows ≤ 128, Cisco/BSD ≤ 255)
 - **Banner grabbing** — connects to open ports and reads service greetings with correct `\r\n` handling so banners never corrupt the terminal display
 - **CVE hint engine** — matches banners against a local JSON rules file; 339 rules covering FTP, SSH, web servers, databases, network gear, VPN gateways, industrial protocols, NAS, cameras, and more
